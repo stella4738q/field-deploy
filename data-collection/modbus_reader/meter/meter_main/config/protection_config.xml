@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<femc-protection>
+    <fields>
+        <field name="ATSCKS" module="plugins.atscks_protection" class="ATSCKS_Protection" function="check_protection"/>
+        <field name="ATSCLD" module="plugins.atscld_protection" class="ATSCLD_Protection" function="check_protection"/>
+    </fields>
+</femc-protection>
