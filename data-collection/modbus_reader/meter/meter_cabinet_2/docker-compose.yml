@@ -1,7 +1,7 @@
 services:
   modbus-reader:
     image: "femc/femc-modbus-reader:latest"
-    container_name: 'meter_main_reader'
+    container_name: 'meter_cabinet_2_reader'
     build:
       context: .
       dockerfile: Dockerfile

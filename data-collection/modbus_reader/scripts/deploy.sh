@@ -11,12 +11,14 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
+DEFAULT_REPO='femc/femc-modbus-reader'
+
 # 配置變數
-IMAGE_NAME="femc-modbus-reader"
-CONTAINER_NAME="modbus-reader"
+IMAGE_NAME="femc/femc-modbus-reader"
+CONTAINER_NAME="femc-modbus-reader"
 BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ')
 VERSION="${VERSION:-latest}"
-DOCKER_HUB_REPO="${DOCKER_HUB_REPO:-femc/femc-modbus-reader}"  # Docker Hub 儲存庫名稱（格式：username/repository）
+DOCKER_HUB_REPO="${DOCKER_HUB_REPO:-$DEFAULT_REPO}"  # Docker Hub 儲存庫名稱（格式：username/repository）
 DOCKER_COMPOSE_FILE="docker-compose.yml"
 DOCKER_USERNAME="${DOCKER_USERNAME:-femc}"  # Docker Hub 使用者名稱
 DOCKER_PASSWORD="${DOCKER_PASSWORD:-}"  # Docker Hub 密碼或 access token
@@ -38,13 +40,47 @@ log_error() {
 check_directories() {
     log_info "檢查必要目錄..."
 
-    local dirs=("config" "modbus_config" "plugins" "logs")
+    local dirs=("/mnt/nas/storage/" "logs" "config" "modbus_config" "plugins" "scripts")
+    local created_count=0
+
     for dir in "${dirs[@]}"; do
         if [ ! -d "$dir" ]; then
             log_warn "目錄 $dir 不存在，正在創建..."
             mkdir -p "$dir"
+            created_count=$((created_count + 1))
         fi
     done
+
+    if [ $created_count -eq 0 ]; then
+        log_info "所有必要目錄已存在 ✓"
+    else
+        log_info "已創建 $created_count 個目錄 ✓"
+    fi
+}
+
+# 函數：驗證部署狀態
+verify_deployment() {
+    local container_name="${1:-$CONTAINER_NAME}"
+
+    log_info "驗證部署狀態..."
+
+    # 檢查容器是否運行
+    if docker ps | grep -q "$container_name"; then
+        log_info "✓ 容器正在運行"
+    else
+        log_error "✗ 容器未運行"
+        log_info "查看容器日誌："
+        docker logs "$container_name" 2>&1 | tail -20
+        return 1
+    fi
+
+    # 顯示容器健康狀態
+    log_info "容器啟動日誌（最後 15 行）："
+    echo "─────────────────────────────────────"
+    docker logs "$container_name" 2>&1 | tail -15
+    echo "─────────────────────────────────────"
+
+    return 0
 }
 
 # 函數：登入 Docker Hub
@@ -205,6 +241,9 @@ deploy_with_compose() {
 
     if [ $? -eq 0 ]; then
         log_info "應用程式部署成功！"
+
+        # 驗證部署狀態
+        verify_deployment
     else
         log_error "應用程式部署失敗！"
         exit 1
@@ -219,16 +258,16 @@ deploy_with_docker() {
         --name $CONTAINER_NAME \
         --restart always \
         --network host \
-        -v "$(pwd)/config:/app/config" \
-        -v "$(pwd)/modbus_config:/app/modbus_config" \
-        -v "$(pwd)/plugins:/app/plugins" \
-        -v "$(pwd)/data:/app/data" \
+        -v "/mnt/nas/storage:/app/data" \
         -v "$(pwd)/logs:/app/logs" \
         -e TZ=Asia/Taipei \
         "$IMAGE_NAME:$VERSION"
 
     if [ $? -eq 0 ]; then
         log_info "應用程式部署成功！"
+
+        # 驗證部署狀態
+        verify_deployment
     else
         log_error "應用程式部署失敗！"
         exit 1
@@ -265,16 +304,21 @@ show_usage() {
     restart         重啟容器
     logs            查看日誌
     status          查看狀態
+    verify          驗證容器運行狀態
+    check           檢查本地目錄
     clean           清理未使用的映像
     help            顯示此說明
 
 環境變數:
     VERSION             指定映像版本（預設: latest）
-    DOCKER_HUB_REPO     指定 Docker Hub 儲存庫（預設: femc-modbus-reader）
+    DOCKER_HUB_REPO     指定 Docker Hub 儲存庫（預設: $DEFAULT_REPO）
     DOCKER_USERNAME     Docker Hub 使用者名稱（用於自動登入）
     DOCKER_PASSWORD     Docker Hub 密碼或 access token（用於自動登入）
 
 範例:
+    # 檢查本地目錄
+    $0 check
+
     # 從 Docker Hub pull 並部署
     $0 pull-deploy
 
@@ -293,8 +337,12 @@ show_usage() {
     # 本地建構並部署
     $0 rebuild
 
+    # 驗證部署狀態
+    $0 verify
+
     # 查看容器日誌
     $0 logs
+
 
 EOF
 }
@@ -355,6 +403,7 @@ main() {
         restart)
             log_info "重啟容器..."
             docker compose restart
+            verify_deployment
             show_status
             ;;
         logs)
@@ -362,6 +411,15 @@ main() {
             ;;
         status)
             show_status
+            ;;
+        verify)
+            verify_deployment
+            show_status
+            ;;
+        check)
+            log_info "檢查本地目錄..."
+            check_directories
+            log_info "✓ 本地環境檢查完成"
             ;;
         clean)
             cleanup_old_images
