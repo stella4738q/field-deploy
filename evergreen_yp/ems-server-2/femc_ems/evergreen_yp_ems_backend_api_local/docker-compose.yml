@@ -8,6 +8,11 @@ services:
     restart: always
     expose:
       - "5000"
+    # 開放端口用於本機直接測試 API (http://localhost:5001/api/...)
+    # 本機端口 5001 映射到容器端口 5000，避免端口衝突
+    # 生產環境不需要此行，因為只透過 reverse_proxy 訪問
+#    ports:
+#      - "5001:5000"
     environment:
       - TZ=Asia/Taipei
     env_file:
@@ -17,8 +22,11 @@ services:
     volumes:
       - ./logs:/app/logs
       - ./docs:/app/docs
-      - /home/femc/project/share_folder:/app/share_folder
-      - /mnt/nas/storage:/app/data
+      - ./share_folder:/app/share_folder
+      - ./data:/app/data
+#      Production paths (commented out for local dev):
+#      - /home/femc/project/share_folder:/app/share_folder
+#      - /mnt/nas/storage:/app/data
     networks:
       - femc_ems_network
 

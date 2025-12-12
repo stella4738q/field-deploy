@@ -19,3 +19,40 @@
 2025/12/12 07:26:25 [emerg] 1#1: host not found in upstream "web-api" in /configs/web-api.locations:2
 2025/12/12 07:26:38 [emerg] 1#1: host not found in upstream "web-api" in /configs/web-api.locations:2
 2025/12/12 07:27:04 [emerg] 1#1: host not found in upstream "web-api" in /configs/web-api.locations:2
+2025/12/12 17:53:11 [emerg] 1#1: host not found in upstream "web-app" in /etc/nginx/nginx.conf:26
+2025/12/12 17:53:11 [emerg] 1#1: host not found in upstream "web-app" in /etc/nginx/nginx.conf:26
+2025/12/12 17:53:11 [emerg] 1#1: host not found in upstream "web-app" in /etc/nginx/nginx.conf:26
+2025/12/12 17:53:12 [emerg] 1#1: host not found in upstream "web-app" in /etc/nginx/nginx.conf:26
+2025/12/12 17:53:12 [emerg] 1#1: host not found in upstream "web-app" in /etc/nginx/nginx.conf:26
+2025/12/12 17:53:14 [emerg] 1#1: host not found in upstream "web-app" in /etc/nginx/nginx.conf:26
+2025/12/12 17:53:18 [emerg] 1#1: host not found in upstream "web-app" in /etc/nginx/nginx.conf:26
+2025/12/12 17:53:24 [emerg] 1#1: host not found in upstream "web-app" in /etc/nginx/nginx.conf:26
+2025/12/12 18:03:52 [emerg] 23#23: host not found in upstream "web-socket-server" in /configs/web-socket.locations:2
+2025/12/12 18:04:05 [notice] 29#29: signal process started
+2025/12/12 18:20:49 [notice] 31#31: signal process started
+2025/12/12 18:33:12 [error] 30#30: *11 connect() failed (113: Host is unreachable) while connecting to upstream, client: 192.168.65.1, server: ems_server_1, request: "GET /api/v1/ HTTP/1.1", upstream: "http://172.23.0.2:5000/api/v1/", host: "localhost"
+2025/12/12 18:33:47 [emerg] 1#1: host not found in upstream "web-api" in /configs/web-api.locations:2
+2025/12/12 18:33:47 [emerg] 1#1: host not found in upstream "web-api" in /configs/web-api.locations:2
+2025/12/12 18:33:47 [emerg] 1#1: host not found in upstream "web-api" in /configs/web-api.locations:2
+2025/12/12 18:33:48 [emerg] 1#1: host not found in upstream "web-api" in /configs/web-api.locations:2
+2025/12/12 18:33:49 [emerg] 1#1: host not found in upstream "web-api" in /configs/web-api.locations:2
+2025/12/12 18:33:50 [emerg] 1#1: host not found in upstream "web-api" in /configs/web-api.locations:2
+2025/12/12 18:33:54 [emerg] 1#1: host not found in upstream "web-api" in /configs/web-api.locations:2
+2025/12/12 18:34:00 [emerg] 1#1: host not found in upstream "web-api" in /configs/web-api.locations:2
+2025/12/12 18:34:13 [emerg] 1#1: host not found in upstream "web-api" in /configs/web-api.locations:2
+2025/12/12 18:34:39 [emerg] 1#1: host not found in upstream "web-api" in /configs/web-api.locations:2
+2025/12/12 18:35:30 [emerg] 1#1: host not found in upstream "web-api" in /configs/web-api.locations:2
+2025/12/12 18:36:30 [emerg] 1#1: host not found in upstream "web-api" in /configs/web-api.locations:2
+2025/12/12 18:37:30 [emerg] 1#1: host not found in upstream "web-api" in /configs/web-api.locations:2
+2025/12/12 18:38:31 [emerg] 1#1: host not found in upstream "web-api" in /configs/web-api.locations:2
+2025/12/12 18:39:31 [emerg] 1#1: host not found in upstream "web-api" in /configs/web-api.locations:2
+2025/12/12 18:39:41 [emerg] 1#1: host not found in upstream "web-api" in /configs/web-api.locations:2
+2025/12/12 18:39:41 [emerg] 1#1: host not found in upstream "web-api" in /configs/web-api.locations:2
+2025/12/12 18:39:41 [emerg] 1#1: host not found in upstream "web-api" in /configs/web-api.locations:2
+2025/12/12 18:39:42 [emerg] 1#1: host not found in upstream "web-api" in /configs/web-api.locations:2
+2025/12/12 18:39:43 [emerg] 1#1: host not found in upstream "web-api" in /configs/web-api.locations:2
+2025/12/12 18:39:44 [emerg] 1#1: host not found in upstream "web-api" in /configs/web-api.locations:2
+2025/12/12 18:39:48 [emerg] 1#1: host not found in upstream "web-api" in /configs/web-api.locations:2
+2025/12/12 18:39:54 [emerg] 1#1: host not found in upstream "web-api" in /configs/web-api.locations:2
+2025/12/12 18:40:07 [emerg] 1#1: host not found in upstream "web-api" in /configs/web-api.locations:2
+2025/12/12 18:40:33 [emerg] 1#1: host not found in upstream "web-api" in /configs/web-api.locations:2

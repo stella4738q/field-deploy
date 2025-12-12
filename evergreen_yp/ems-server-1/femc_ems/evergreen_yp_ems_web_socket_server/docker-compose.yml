@@ -18,7 +18,9 @@ services:
       - ./config.ini:/app/config.ini
       - ./config:/app/config
       - ./ssl_cert/:/app/ssl_cert
-      - /mnt/nas/storage:/app/data
+      - ./data:/app/data
+#      Production path (commented out for local dev):
+#      - /mnt/nas/storage:/app/data
     networks:
       - femc_ems_network
 
