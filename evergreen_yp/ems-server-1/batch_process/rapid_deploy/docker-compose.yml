@@ -1,0 +1,232 @@
+services:
+  essci_batch:
+    image: "batch-scheduler:v1.0.0"
+    container_name: "batch-essci"
+    restart: always
+    network_mode: host
+    environment:
+      - TZ=Asia/Taipei
+    command: [ "python", "main.py" ]
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    volumes:
+      - ./logs:/app/logs
+      - ./config.ini:/app/config.ini
+      - /mnt/nas/storage:/app/data
+      - /home/femc/project/share_folder:/app/share_folder
+
+  job_00_status_control:
+    image: "batch-scheduler:v1.0.0"
+    container_name: "job_00_status_control"
+    restart: always
+    network_mode: host
+    environment:
+      - TZ=Asia/Taipei
+    command: [ "python", "main.py" ]
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    volumes:
+      - ./logs:/app/logs
+      - ./config.ini:/app/config.ini
+      - /mnt/nas/storage:/app/data
+      - /home/femc/project/share_folder:/app/share_folder
+
+  job_01_protect_control:
+    image: "batch-scheduler:v1.0.0"
+    container_name: "job_01_protect_control"
+    restart: always
+    network_mode: host
+    environment:
+      - TZ=Asia/Taipei
+    command: [ "python", "main.py" ]
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    volumes:
+      - ./logs:/app/logs
+      - ./config.ini:/app/config.ini
+      - /mnt/nas/storage:/app/data
+      - /home/femc/project/share_folder:/app/share_folder
+
+  job_02_reverse_control:
+    image: "batch-scheduler:v1.0.34"
+    container_name: "job_02_reverse_control"
+    restart: always
+    network_mode: host
+    environment:
+      - TZ=Asia/Taipei
+    command: [ "python", "main.py" ]
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    volumes:
+      - ./logs:/app/logs
+      - ./config.ini:/app/config.ini
+      - /mnt/nas/storage:/app/data
+      - /home/femc/project/share_folder:/app/share_folder
+
+  job_03_power_control:
+    image: "batch-scheduler:v1.0.38"
+    container_name: "job_03_power_control"
+    restart: always
+    network_mode: host
+    environment:
+      - TZ=Asia/Taipei
+    command: [ "python", "main.py" ]
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    volumes:
+      - ./logs:/app/logs
+      - ./config.ini:/app/config.ini
+      - /mnt/nas/storage:/app/data
+      - /home/femc/project/share_folder:/app/share_folder
+
+  job_04_contract_power:
+    image: "batch-scheduler:v1.0.34"
+    container_name: "job_04_contract_power"
+    restart: always
+    network_mode: host
+    environment:
+      - TZ=Asia/Taipei
+    command: [ "python", "main.py" ]
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    volumes:
+      - ./logs:/app/logs
+      - ./config.ini:/app/config.ini
+      - /mnt/nas/storage:/app/data
+      - /home/femc/project/share_folder:/app/share_folder
+
+  server:
+    image: "batch-scheduler:v1.0.38"
+    container_name: "job-05-charge-schedule"
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    restart: always
+    network_mode: host
+    environment:
+      - TZ=Asia/Taipei
+    command: [ "python", "main.py" ]
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    volumes:
+      - ./logs:/app/logs
+      - ./config.ini:/app/config.ini
+      - /mnt/nas/storage:/app/data
+      - /home/femc/project/share_folder:/app/share_folder
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
