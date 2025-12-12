@@ -1,0 +1,35 @@
+docxtpl~=0.16.7
+docx2pdf~=0.1.8
+Flask~=1.1
+flask-restx~=0.4
+Flask-RESTful~=0.3
+Flask-Session~=0.4
+Flask-Cors~=3.0.10
+jsonschema~=4.2
+numpy~=1.22.4
+pandas==1.4.2
+requests~=2.26
+six~=1.16
+xlrd~=2.0
+Werkzeug~=1.0
+openpyxl~=3.0.9
+markupsafe~=2.0.1
+python-dotenv~=0.17.0
+PyYAML~=6.0
+pymongo~=3.12.3
+PyJWT~=2.4.0
+beautifulsoup4~=4.11.1
+modbus_tk~=1.1.2
+google-auth-oauthlib~=0.8.0
+google-api-python-client~=2.71.0
+XlsxWriter~=3.1.0
+pyModbusTCP == 0.2.0
+slack-sdk ~= 3.18.3
+pymodbus~=3.3.2
+pysmb==1.2.9.1
+odfpy~=1.4.1
+Pillow~=9.3.0
+PyPDF2~=3.0.1
+pyotp~=2.9.0
+pycryptodome~=3.21.0
+qrcode~=7.4.2

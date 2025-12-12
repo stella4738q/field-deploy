@@ -1,0 +1,943 @@
+{
+    "nodes": [
+        {
+            "id": "EMS機櫃",
+            "type": "default",
+            "data": {},
+            "label": "EMS機櫃",
+            "position": {
+                "x": 240,
+                "y": -60
+            },
+            "class": "light",
+            "style": {
+                "width": "650px",
+                "height": "690px",
+                "fontSize":"18px",
+                "borderColor": "#002379",
+                "backgroundColor":"rgba(255, 255, 255, 0.1)"
+            }
+        },
+        {
+            "id": "1U 機架型LCD KVM",
+            "type": "default",
+            "data": {},
+            "label": "1U 機架型LCD KVM",
+            "position": {
+                "x": 290,
+                "y": 100
+            },
+            "style": {
+                "width": "220px",
+                "fontSize":"20px"
+                
+            },
+            "class": "light",
+            "sourcePosition":"left",
+            "targetPosition":"right"
+        },
+        {
+            "id": "EMS主機",
+            "type": "default",
+            "data": {},
+            "label": "EMS主機",
+            "position": {
+                "x": 311,
+                "y": 200
+            },
+            "style": {
+                "fontSize":"20px"
+            },
+            "class": "light",
+            "sourcePosition":"right",
+            "targetPosition":"left"
+        },
+        {
+            "id": "I/O Logik",
+            "type": "default",
+            "data": {},
+            "label": "I/O Logik",
+            "position": {
+                "x": 311,
+                "y": 350
+            },
+            "style": {
+                "fontSize":"20px"
+            },
+            "class": "light",
+            "sourcePosition":"right",
+            "targetPosition":"left"
+        },
+        {
+            "id": "Mgate主機",
+            "type": "default",
+            "data": {},
+            "label": "Mgate主機",
+            "position": {
+                "x": 311,
+                "y": 450
+            },
+            "style": {
+                "fontSize":"20px"
+            },
+            "class": "light",
+            "sourcePosition":"right",
+            "targetPosition":"bottom"
+        },
+        {
+            "id": "Switch",
+            "type": "default",
+            "data": {},
+            "label": "Switch",
+            "position": {
+                "x": 532,
+                "y": 300
+            },
+            "style": {
+                "fontSize":"20px"
+            },
+            "class": "light",
+            "sourcePosition":"right",
+            "targetPosition":"left"
+        },
+        {
+            "id": "EMS光纖收容箱",
+            "type": "default",
+            "data": {},
+            "label": "光纖收容箱",
+            "position": {
+                "x": 750,
+                "y": 60
+            },
+            "style": {
+                "width": "120px",
+                "fontSize": "18px"
+            },
+            "class": "light",
+            "sourcePosition":"right",
+            "targetPosition":"left"
+        },
+    
+        {
+            "id": "電池櫃",
+            "type": "default",
+            "data": {},
+            "label": "電池櫃",
+            "position": {
+                "x": 950,
+                "y": -60
+            },
+            "class": "light",
+            "style": {
+                "width": "320px",
+                "height": "190px",
+                "fontSize": "18px",
+                "borderColor": "#002379",
+                "backgroundColor":"rgba(255, 255, 255, 0.1)"
+            }
+        },
+        {
+            "id": "光電Hub",
+            "type": "default",
+            "data": {},
+            "label": "光電Hub",
+            "position": {
+                "x": 970,
+                "y": 10
+            },
+            "style": {
+                "width": "100px",
+                "fontSize": "18px"
+            },
+            "class": "light",
+            "sourcePosition":"right",
+            "targetPosition":"top"
+        },
+        {
+            "id": "電池櫃光纖收容箱",
+            "type": "default",
+            "data": {},
+            "label": "光纖收容箱",
+            "position": {
+                "x": 970,
+                "y": 60
+            },
+            "style": {
+                "width": "120px",
+                "fontSize": "18px"
+            },
+            "class": "light",
+            "sourcePosition":"top",
+            "targetPosition":"left"
+        },
+        {
+            "id": "電池櫃RJ 45埠",
+            "type": "default",
+            "data": {},
+            "label": "RJ 45埠",
+            "position": {
+                "x": 1150,
+                "y": -10
+            },
+            "style": {
+                "width": "90px",
+                "fontSize": "18px"
+            },
+            "class": "light",
+            "sourcePosition":"right",
+            "targetPosition":"left"
+        },
+        {
+            "id": "電池櫃I/O Logik",
+            "type": "default",
+            "data": {},
+            "label": "I/O Logik",
+            "position": {
+                "x": 1150,
+                "y": 70
+            },
+            "style": {
+                "width": "100px",
+                "fontSize": "18px"
+            },
+            "class": "light",
+            "sourcePosition":"right",
+            "targetPosition":"left"
+        },
+    
+        {
+            "id": "變壓器",
+            "type": "default",
+            "data": {},
+            "label": "變壓器",
+            "position": {
+                "x": 1300,
+                "y": -60
+            },
+            "class": "light",
+            "style": {
+                "width": "140px",
+                "height": "190px",
+                "borderColor": "#002379",
+                "backgroundColor":"rgba(255, 255, 255, 0.1)",
+                "fontSize": "18px"
+            }
+        },
+        {
+            "id": "溫度",
+            "type": "default",
+            "data": {},
+            "label": "溫度告警",
+            "position": {
+                "x": 1320,
+                "y": 5
+            },
+            "style": {
+                "width": "100px",
+                "fontSize": "18px"
+            },
+            "class": "light",
+            "sourcePosition":"top",
+            "targetPosition":"bottom"
+        },
+    
+        {
+            "id": "Fimer PCS",
+            "type": "default",
+            "data": {},
+            "label": "Fimer PCS",
+            "position": {
+                "x": 1470,
+                "y": -60
+            },
+            "class": "light",
+            "style": {
+                "width": "150px",
+                "height": "190px",
+                "borderColor": "#002379",
+                "backgroundColor":"rgba(255, 255, 255, 0.1)",
+                "fontSize": "18px"
+            }
+        },
+        {
+            "id": "PCS_RJ 45埠",
+            "type": "default",
+            "data": {},
+            "label": "RJ 45埠",
+            "position": {
+                "x": 1505,
+                "y": 5
+            },
+            "style": {
+                "width": "90px",
+                "fontSize": "18px"
+            },
+            "class": "light",
+            "sourcePosition":"top",
+            "targetPosition":"bottom"
+        },
+    
+        {
+            "id": "MP-BESS盤",
+            "type": "default",
+            "data": {},
+            "label": "MP-BESS盤",
+            "position": {
+                "x": 1650,
+                "y": -60
+            },
+            "class": "light",
+            "style": {
+                "width": "150px",
+                "height": "190px",
+                "borderColor": "#002379",
+                "backgroundColor":"rgba(255, 255, 255, 0.1)",
+                "fontSize": "18px"
+            }
+        },
+        {
+            "id": "MP-BESS_Meter",
+            "type": "default",
+            "data": {},
+            "label": "Meter",
+            "position": {
+                "x": 1690,
+                "y": 5
+            },
+            "style": {
+                "width": "70px",
+                "height": "70px",
+                "borderRadius": "50%",
+                "textAlign": "center",
+                "fontSize": "18px"
+            },
+            "class": "light",
+            "sourcePosition":"top",
+            "targetPosition":"bottom"
+        },
+    
+        {
+            "id": "晉瑜電氣室高壓盤",
+            "type": "default",
+            "data": {},
+            "label": "廠內高壓HP盤",
+            "position": {
+                "x": 950,
+                "y": 160
+            },
+            "class": "light",
+            "style": {
+                "width": "150px",
+                "height": "150px",
+                "borderColor": "#002379",
+                "backgroundColor":"rgba(255, 255, 255, 0.1)",
+                "fontSize": "18px"
+            }
+        },
+        {
+            "id": "高壓盤_Meter",
+            "type": "default",
+            "data": {},
+            "label": "Meter",
+            "position": {
+                "x": 990,
+                "y": 230
+            },
+            "style": {
+                "width": "70px",
+                "height": "70px",
+                "borderRadius": "50%",
+                "textAlign": "center",
+                "fontSize": "18px"
+            },
+            "class": "light",
+            "sourcePosition":"right",
+            "targetPosition":"left"
+        },
+    
+        {
+            "id": "晉瑜電氣室低壓盤",
+            "type": "default",
+            "data": {},
+            "label": "廠內低壓MP1-1盤",
+            "position": {
+                "x": 1120,
+                "y": 160
+            },
+            "class": "light",
+            "style": {
+                "width": "150px",
+                "height": "150px",
+                "borderColor": "#002379",
+                "backgroundColor":"rgba(255, 255, 255, 0.1)",
+                "fontSize": "18px"
+            }
+        },
+        {
+            "id": "低壓盤_Meter",
+            "type": "default",
+            "data": {},
+            "label": "Meter",
+            "position": {
+                "x": 1160,
+                "y": 230
+            },
+            "style": {
+                "width": "70px",
+                "height": "70px",
+                "borderRadius": "50%",
+                "textAlign": "center",
+                "fontSize": "18px"
+            },
+            "class": "light",
+            "sourcePosition":"right",
+            "targetPosition":"bottom"
+        },
+    
+        {
+            "id": "中華電信",
+            "type": "default",
+            "data": {},
+            "label": "中華電信",
+            "position": {
+                "x": 980,
+                "y": 370
+            },
+            "style": {
+                "width": "100px",
+                "fontSize": "18px",
+                "font-family":" Avenir, Helvetica, Arial, sans-serif"
+            },
+            "class": "light",
+            "sourcePosition":"right",
+            "targetPosition":"left"
+        },
+    
+        {
+            "id": "太陽能",
+            "type": "default",
+            "data": {},
+            "label": "太陽能",
+            "position": {
+                "x": 950,
+                "y": 440
+            },
+            "class": "light",
+            "style": {
+                "width": "510px",
+                "height": "190px",
+                "borderColor": "#002379",
+                "backgroundColor":"rgba(255, 255, 255, 0.1)",
+                "fontSize": "18px"
+            }
+        },
+        {
+            "id": "太陽能_Meter",
+            "type": "default",
+            "data": {},
+            "label": "Meter",
+            "position": {
+                "x": 980,
+                "y": 500
+            },
+            "style": {
+                "width": "70px",
+                "height": "70px",
+                "borderRadius": "50%",
+                "textAlign": "center",
+                "fontSize": "18px"
+            },
+            "class": "light",
+            "sourcePosition":"bottom",
+            "targetPosition":"top"
+        },
+        {
+            "id": "Getway",
+            "type": "default",
+            "data": {},
+            "label": "Getway (廠內預計增加)",
+            "position": {
+                "x": 1070,
+                "y": 530
+            },
+            "style": {
+                "width": "120px",
+                "fontSize": "18px"
+            },
+            "class": "light",
+            "sourcePosition":"right",
+            "targetPosition":"top"
+        },
+        {
+            "id": "INVT1",
+            "type": "default",
+            "data": {},
+            "label": "INVT1",
+            "position": {
+                "x": 1200,
+                "y": 515
+            },
+            "style": {
+                "width": "65px",
+                "height": "80px",
+                "fontSize": "18px"
+            },
+            "class": "light",
+            "sourcePosition":"bottom",
+            "targetPosition":"top"
+        },
+        {
+            "id": "INVT2",
+            "type": "default",
+            "data": {},
+            "label": "INVT2",
+            "position": {
+                "x": 1265,
+                "y": 515
+            },
+            "style": {
+                "width": "70px",
+                "height": "80px",
+                "fontSize": "18px"
+            },
+            "class": "light",
+            "sourcePosition":"bottom",
+            "targetPosition":"top"
+        },
+        {
+            "id": "INVTN",
+            "type": "default",
+            "data": {},
+            "label": "INVTN",
+            "position": {
+                "x": 1370,
+                "y": 515
+            },
+            "style": {
+                "width": "70px",
+                "height": "80px",
+                "fontSize": "18px"
+            },
+            "class": "light",
+            "sourcePosition":"bottom",
+            "targetPosition":"top"
+        },
+    
+        {
+            "id": "DI",
+            "type": "default",
+            "data": {},
+            "label": "DI",
+            "position": {
+                "x": 1480,
+                "y": 580
+            },
+            "style": {
+                "width": "40px",
+                "height": "40px",
+                "fontSize":"18px",
+                "color":"white",
+                "borderColor": "#C499F3",
+                "backgroundColor":"rgb(196, 153, 243)"
+            },
+            "class": "light",
+            "sourcePosition":"bottom",
+            "targetPosition":"top"
+        },
+
+        {
+            "id": "Cat6",
+            "type": "default",
+            "data": {},
+            "label": "Cat6",
+            "position": {
+                "x": 60,
+                "y": -60
+            },
+            "style": {
+                "width": "110px",
+                "fontSize":"18px",
+                "color":"white",
+                "borderColor": "#FF5F00",
+                "backgroundColor":"rgba(255, 95, 0)"
+            },
+            "class": "light"
+        },
+        {
+            "id": "多模光纖",
+            "type": "default",
+            "data": {},
+            "label": "多模光纖",
+            "position": {
+                "x": 60,
+                "y": 0
+            },
+            "style": {
+                "width": "110px",
+                "fontSize":"18px",
+                "color":"white",
+                "borderColor": "#34B3F1",
+                "backgroundColor":"rgba(52, 179, 241)"
+            },
+            "class": "light"
+        },
+        {
+            "id": "RS485",
+            "type": "default",
+            "data": {},
+            "label": "RS485",
+            "position": {
+                "x": 60,
+                "y": 60
+            },
+            "style": {
+                "width": "110px",
+                "fontSize":"18px",
+                "color":"white",
+                "borderColor": "green",
+                "backgroundColor":"green"
+            },
+            "class": "light"
+        },
+        {
+            "id": "VGA+PS/2",
+            "type": "default",
+            "data": {},
+            "label": "VGA+PS/2",
+            "position": {
+                "x": 60,
+                "y": 120
+            },
+            "style": {
+                "width": "110px",
+                "fontSize":"18px",
+                "color":"white",
+                "borderColor": "#B4B4B8",
+                "backgroundColor":"rgba(180, 180, 184)"
+            },
+            "class": "light"
+        },
+        {
+            "id": "DO/DI",
+            "type": "default",
+            "data": {},
+            "label": "DO/DI",
+            "position": {
+                "x": 60,
+                "y": 180
+            },
+            "style": {
+                "width": "110px",
+                "fontSize":"18px",
+                "color":"white",
+                "borderColor": "#C499F3",
+                "backgroundColor":"rgb(196, 153, 243)"
+            },
+            "class": "light"
+        },
+        {
+            "id": "訊號線",
+            "type": "default",
+            "data": {},
+            "label": "訊號線",
+            "position": {
+                "x": 60,
+                "y": 240
+            },
+            "style": {
+                "width": "110px",
+                "borderColor": "#6F4E37",
+                "fontSize":"18px",
+                "color":"white",
+                "backgroundColor":"rgba(111, 78, 55)"
+            },
+            "class": "light"
+        },
+
+        {
+            "id": "meter_cabinet通訊",
+            "type": "default",
+            "data": {},
+            "label": "",
+            "position": {
+                "x": 1050,
+                "y": 210
+            },
+            "class": "light",
+            "style": {
+                "width": "20px",
+                "height": "20px",
+                "borderRadius": "50%"
+            }
+        },
+        {
+            "id": "meter_main通訊",
+            "type": "default",
+            "data": {},
+            "label": "",
+            "position": {
+                "x": 1050,
+                "y": 210
+            },
+            "class": "light",
+            "style": {
+                "width": "20px",
+                "height": "20px",
+                "borderRadius": "50%"
+            }
+        },
+        {
+            "id": "meter_factory通訊",
+            "type": "default",
+            "data": {},
+            "label": "",
+            "position": {
+                "x": 1230,
+                "y": 210
+            },
+            "class": "light",
+            "style": {
+                "width": "20px",
+                "height": "20px",
+                "borderRadius": "50%"
+            }
+        },
+        {
+            "id": "meter_sun通訊",
+            "type": "default",
+            "data": {},
+            "label": "",
+            "position": {
+                "x": 1040,
+                "y": 480
+            },
+            "class": "light",
+            "style": {
+                "width": "20px",
+                "height": "20px",
+                "borderRadius": "50%"
+            }
+        },
+        {
+            "id": "invertor通訊",
+            "type": "default",
+            "data": {},
+            "label": "",
+            "position": {
+                "x": 1222,
+                "y": 480
+            },
+            "class": "light",
+            "style": {
+                "width": "20px",
+                "height": "20px",
+                "borderRadius": "50%"
+            }
+        }
+
+
+        
+    ],
+    "edges": [
+        {
+            "id": "1U 機架型LCD KVM__EMS主機",
+            "type": "smoothstep",
+            "source": "1U 機架型LCD KVM",
+            "target": "EMS主機",
+            "style": {
+                "strokeWidth":"3px"
+            }
+        },
+    
+        {
+            "id": "EMS主機__Switch",
+            "type": "smoothstep",
+            "source": "EMS主機",
+            "target": "Switch",
+            "style": {
+                "stroke": "#FF5F00",
+                "strokeWidth":"3px"
+            }
+        },
+        {
+            "id": "I/O Logik__Switch",
+            "type": "smoothstep",
+            "source": "I/O Logik",
+            "target": "Switch",
+            "style": {
+                "stroke": "#FF5F00",
+                "strokeWidth":"3px"
+            }
+        },
+        {
+            "id": "Mgate主機__Switch",
+            "type": "smoothstep",
+            "source": "Mgate主機",
+            "target": "Switch",
+            "style": {
+                "stroke": "#FF5F00",
+                "strokeWidth":"3px"
+            }
+        },
+        {
+            "id": "Switch__EMS光纖收容箱",
+            "type": "smoothstep",
+            "source": "Switch",
+            "target": "EMS光纖收容箱",
+            "style": {
+                "stroke": "#FF5F00",
+                "strokeWidth":"3px"
+            }
+        },
+        {
+            "id": "Switch__高壓盤_Meter",
+            "type": "smoothstep",
+            "source": "Switch",
+            "target": "高壓盤_Meter",
+            "style": {
+                "stroke": "#FF5F00",
+                "strokeWidth":"3px"
+            }
+        },
+        {
+            "id": "Switch__低壓盤_Meter",
+            "type": "smoothstep",
+            "source": "Switch",
+            "target": "低壓盤_Meter",
+            "style": {
+                "stroke": "#FF5F00",
+                "strokeWidth":"3px"
+            }
+        },
+        {
+            "id": "Switch__中華電信",
+            "type": "smoothstep",
+            "source": "Switch",
+            "target": "中華電信",
+            "style": {
+                "stroke": "#FF5F00",
+                "strokeWidth":"3px"
+            }
+        },
+        {
+            "id": "Switch__Getway",
+            "type": "smoothstep",
+            "source": "Switch",
+            "target": "Getway",
+            "style": {
+                "stroke": "#FF5F00",
+                "strokeWidth":"3px"
+            }
+        },
+        
+
+        {
+            "id": "EMS光纖收容箱__電池櫃光纖收容箱",
+            "type": "smoothstep",
+            "source": "EMS光纖收容箱",
+            "target": "電池櫃光纖收容箱",
+            "style": {
+                "stroke": "#34B3F1",
+                "strokeWidth":"3px"
+            }
+        },
+        {
+            "id": "光電Hub__電池櫃RJ 45埠",
+            "type": "smoothstep",
+            "source": "光電Hub",
+            "target": "電池櫃RJ 45埠",
+            "style": {
+                "stroke": "#FF5F00",
+                "strokeWidth":"3px"
+            }
+        },
+        {
+            "id": "光電Hub__電池櫃I/O Logik",
+            "type": "smoothstep",
+            "source": "光電Hub",
+            "target": "電池櫃I/O Logik",
+            "style": {
+                "stroke": "#FF5F00",
+                "strokeWidth":"3px"
+            }
+        },
+        {
+            "id": "光電Hub__PCS_RJ 45埠",
+            "type": "smoothstep",
+            "source": "PCS_RJ 45埠",
+            "target": "光電Hub",
+            "style": {
+                "stroke": "#FF5F00",
+                "strokeWidth":"3px"
+            }
+        },
+        {
+            "id": "光電Hub__MP-BESS_Meter",
+            "type": "smoothstep",
+            "source": "MP-BESS_Meter",
+            "target": "光電Hub",
+            "style": {
+                "stroke": "#FF5F00",
+                "strokeWidth":"3px"
+            }
+        },
+        {
+            "id": "電池櫃I/O Logik__溫度",
+            "type": "smoothstep",
+            "source": "電池櫃I/O Logik",
+            "target": "溫度",
+            "style": {
+                "stroke": "#6F4E37",
+                "strokeWidth":"3px"
+            }
+        },
+
+        {
+            "id": "Mgate主機__太陽能_Meter",
+            "type": "smoothstep",
+            "source": "太陽能_Meter",
+            "target": "Mgate主機",
+            "style": {
+                "stroke": "green",
+                "strokeWidth":"3px"
+            }
+        },
+
+        {
+            "id": "I/O Logik__INVT1",
+            "type": "smoothstep",
+            "source": "INVT1",
+            "target": "I/O Logik",
+            "style": {
+                "stroke": "#C499F3",
+                "strokeWidth":"3px"
+            }
+        },
+        {
+            "id": "I/O Logik__DI",
+            "type": "smoothstep",
+            "source": "DI",
+            "target": "I/O Logik",
+            "style": {
+                "stroke": "#C499F3",
+                "strokeWidth":"3px"
+            }
+        },
+        {
+            "id": "DI__低壓盤_Meter",
+            "type": "smoothstep",
+            "source": "低壓盤_Meter",
+            "target": "DI",
+            "style": {
+                "stroke": "#C499F3",
+                "strokeWidth":"3px"
+            }
+        }
+        
+        
+    ],
+    "position": [
+        534.9458871594002,
+        129.85210124903244
+    ]
+}

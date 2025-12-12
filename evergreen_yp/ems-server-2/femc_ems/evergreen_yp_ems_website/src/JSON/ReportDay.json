@@ -1,0 +1,55 @@
+{
+    "data": [
+        {
+            "plot_data": {
+                "charge": [
+                    -8995.96,
+                    -36307.29
+                ],
+                "date": [
+                    "2023-08-31",
+                    "2023-09-30"
+                ],
+                "discharge": [
+                    39646.68,
+                    113058.59
+                ],
+                "revenue": [
+                    30650.72,
+                    76751.3
+                ]
+            },
+            "raw_data": [
+                {
+                    "action": "charge",
+                    "date": "2023-08-31 00:00:00",
+                    "degree": 4714.54316667,
+                    "duration": "0 days 22:54:42.001000",
+                    "total_amount": -8995.96355751
+                },
+                {
+                    "action": "discharge",
+                    "date": "2023-08-31 00:00:00",
+                    "degree": 6121.306777780001,
+                    "duration": "0 days 08:35:01.002000",
+                    "total_amount": 39646.68398668
+                },
+                {
+                    "action": "charge",
+                    "date": "2023-09-30 00:00:00",
+                    "degree": 19765.85655556,
+                    "duration": "2 days 09:45:07.999000",
+                    "total_amount": -36307.29342723
+                },
+                {
+                    "action": "discharge",
+                    "date": "2023-09-30 00:00:00",
+                    "degree": 17183.26433333,
+                    "duration": "0 days 15:51:19.002000",
+                    "total_amount": 113058.58938278
+                }
+            ]
+        }
+    ],
+    "message": "Success"
+}

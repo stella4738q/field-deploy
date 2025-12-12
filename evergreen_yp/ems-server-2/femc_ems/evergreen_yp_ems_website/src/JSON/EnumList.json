@@ -1,0 +1,134 @@
+{
+  "Fields": {
+    "Type": [
+      { "key": "ups", "val": "UPS" },
+      { "key": "storage", "val": "Storage" },
+      { "key": "solar", "val": "Solar" },
+      { "key": "solar-storage", "val": "Solar Storage" }
+    ]
+  },
+  "BID": {
+    "equipment_type": [
+      { "key": 0, "val": "發電機組" },
+      { "key": 1, "val": "儲能設備" },
+      { "key": 2, "val": "超約設定" },
+      { "key": 3, "val": "自用發電設備" },
+      { "key": 4, "val": "太陽能" }
+    ],
+    "service": [
+      { "key": "dReg 0.25", "val": "dReg 0.25" },
+      { "key": "dReg 0.5", "val": "dReg 0.5" },
+      { "key": "sReg", "val": "sReg" },
+      { "key": "E-dReg", "val": "E-dReg" },
+      { "key": "即時備轉容量", "val": "即時備轉容量" },
+      { "key": "補充備轉容量", "val": "補充備轉容量" }
+    ],
+    "TestResult": [
+      { "key": 0, "val": "失敗" },
+      { "key": 1, "val": "成功" },
+      { "key": 2, "val": "未測試" }
+    ],
+    "UploadResult": [
+      { "key": 0, "val": "未建立資料" },
+      { "key": 1, "val": "投標資料建立完成" },
+      { "key": 2, "val": "已上傳得標結果" }
+    ]
+  },
+  "ems_status": [
+    { "key": -1, "val": "Not Available" },
+    { "key": 0, "val": "待命" },
+    { "key": 1, "val": "逆送電保護" },
+    { "key": 2, "val": "手動{0}電" },
+    { "key": 3, "val": "抑低電量" },
+    { "key": 4, "val": "超約模式保護" },
+    { "key": 5, "val": "排程{0}電" },
+    { "key": 6, "val": "太陽能自動補電" },
+    { "key": 7, "val": "離峰充電" },
+    { "key": 8, "val": "全黑啟動" },
+    { "key": 9, "val": "即時備轉控制" },
+    { "key": 10, "val": "遠端手動控制" }
+  ],
+  "sr_status": [
+    { "key": 0, "val": "未得標"},
+    { "key": 1, "val": "待命中"},
+    { "key": 2, "val": "中止服務"},
+    { "key": 3, "val": "調度執行中"},
+    { "key": 4, "val": "調度恢復"}
+  ],
+  "operation_mode": [
+    { "key": 0, "val": "EMS控制" },
+    { "key": 1, "val": "遠端控制" }
+  ],
+  "meterChart": [
+    { "val": "frequency", "label": "frequency" },
+    { "val": "v_phs_a", "label": "v_phs_an" },
+    { "val": "v_phs_b", "label": "v_phs_bn" },
+    { "val": "v_phs_c", "label": "v_phs_cn" },
+    { "val": "VN", "label": "v_avg" },
+    { "val": "v_avg", "label": "VN" },
+    { "val": "v_phs_ab", "label": "v_phs_ab" },
+    { "val": "v_phs_bc", "label": "v_phs_bc" },
+    { "val": "v_phs_ca", "label": "v_phs_ca" },
+    { "val": "i_phs_a", "label": "i_phs_a" },
+    { "val": "i_phs_b", "label": "i_phs_b" },
+    { "val": "i_phs_c", "label": "i_phs_c" },
+    { "val": "IN", "label": "IN" },
+    { "val": "i_avg", "label": "i_avg" },
+    { "val": "p_total", "label": "p_total" },
+    { "val": "q_total", "label": "q_total" },
+    { "val": "s_total", "label": "s_total" }
+  ],
+  "MeterAttrOption": [
+    { "label": "頻率", "val": "frequency" },
+    { "label": "電壓RN", "val": "voltage_a" },
+    { "label": "電壓SN", "val": "voltage_b" },
+    { "label": "電壓TN", "val": "voltage_c" },
+    { "label": "相對地平均電壓", "val": "line_voltage_avg" },
+    { "label": "電流R相", "val": "current_a" },
+    { "label": "電流S相", "val": "current_b" },
+    { "label": "電流T相", "val": "current_c" },
+    { "label": "實功功率", "val": "active_power" },
+    { "label": "虛功功率", "val": "reactive_power" },
+    { "label": "視在功率", "val": "apparent_power" },
+    { "label": "功率因素", "val": "power_factor" },
+    { "label": "累積輸入量(kWh)", "val": "energy_imp" },
+    { "label": "累積輸出量(kWh)", "val": "energy_exp" },
+    { "label": "15分鐘累積量(kW)", "val": "accu_demand_kw" }
+  ],
+  "MeterOption": [
+    { "val": "METER_MAIN", "label": "廠內高壓總錶" },
+    { "val": "METER_FACTORY", "label": "廠內低壓分錶" },
+    { "val": "METER_CABINET", "label": "儲能櫃電錶" },
+    { "val": "METER_VCB", "label": "VCBBESS電錶" },
+    { "val": "METER_SUN", "label": "太陽能電錶" }
+  ],
+  "cycle_type": [
+    { "key": "h", "val": "小時" },
+    { "key": "m", "val": "分" },
+    { "key": "s", "val": "秒" },
+    { "key": "t", "val": "定時" }
+  ],
+  "PCSAttrOption": [
+    { "label": "頻率", "val": "frequency" },
+    { "label": "AC側電壓R相", "val": "volt_rs" },
+    { "label": "AC側電壓S相", "val": "volt_st" },
+    { "label": "AC側電壓T相", "val": "volt_tr" },
+    { "label": "AC側電壓", "val": "volt_avg" },
+    { "label": "AC側電流R相", "val": "current_r" },
+    { "label": "AC側電流S相", "val": "current_s" },
+    { "label": "AC側電流T相", "val": "current_t" },
+    { "label": "實功功率", "val": "active_power" },
+    { "label": "虛功功率", "val": "reactive_power" },
+    { "label": "DC側電壓", "val": "battery_voltage" }
+  ],
+  "BMSAttrOption": [
+    { "label": "SOC", "val": "soc" },
+    { "label": "SOH", "val": "soh" },
+    { "label": "電壓", "val": "voltage" },
+    { "label": "電流", "val": "current" },
+    { "label": "日充電量(kWh)", "val": "daily_charging_capacity" },
+    { "label": "日放電量(kWh)", "val": "daily_discharging_capacity" },
+    { "label": "總充電量(kWh)", "val": "total_charge_capacity" },
+    { "label": "總放電量(kWh)", "val": "total_discharge_capacity" }
+  ]
+}

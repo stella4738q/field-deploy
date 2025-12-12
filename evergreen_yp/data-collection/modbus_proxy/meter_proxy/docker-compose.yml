@@ -1,0 +1,21 @@
+services:
+  modbus-proxy:
+    image: "femc/femc-modbus-proxy:v1.0.0"
+    container_name: "meter_proxy"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - TZ=Asia/Taipei
+    restart: always
+    volumes:
+      - ./modbus_proxy.yaml:/app/modbus_proxy.yaml
+      - ./log-verbose.conf:/app/log-verbose.conf
+      - /mnt/nas/storage:/app/data
+    ports:
+      - 6004:6004
+      - 6005:6005
+      - 6006:6006
+      - 6007:6007
+      - 6008:6008
+      - 6009:6009

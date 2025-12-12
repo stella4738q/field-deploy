@@ -1,0 +1,11 @@
+devices:
+# bmu 1
+- modbus:
+    url: 192.168.100.130:502
+  listen:
+    bind: 0:6002
+# bmu 2
+- modbus:
+    url: 192.168.100.131:502
+  listen:
+    bind: 0:6003

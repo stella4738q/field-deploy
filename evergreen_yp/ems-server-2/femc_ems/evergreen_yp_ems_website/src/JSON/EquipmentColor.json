@@ -1,0 +1,55 @@
+{
+    "PCS": [
+        { "key": "停機", "color": "dark" },
+        { "key": "待機", "color": "success" },
+        { "key": "故障", "color": "danger" },
+        { "key": "充電", "color": "success" },
+        { "key": "放電", "color": "success" },
+        { "key": "充電降額", "color": "success" },
+        { "key": "放電降額", "color": "success" }
+    ],
+    "BMS" : [
+        { "key": 0 , "name" : "初始化", "color": "warning" },
+        { "key": 1 , "name" : "正常", "color": "success" },
+        { "key": 2 , "name" : "禁充", "color": "success" },
+        { "key": 3 , "name" : "禁放", "color": "success" },
+        { "key": 4 , "name" : "告警", "color": "danger" },
+        { "key": 5 , "name" : "故障", "color": "danger" },
+        { "key": 6 , "name" : "待機", "color": "dark" }
+    ] ,
+    "RACK" :[
+        { "key": "初始化", "color": "warning" },
+        { "key": "待機", "color": "dark" },
+        { "key": "預充", "color": "warning" },
+        { "key": "驅動預充", "color": "warning" },
+        { "key": "預充充電", "color": "warning" },
+        { "key": "驅動", "color": "success" },
+        { "key": "充電", "color": "success" },
+        { "key": "BMU ADC 故障", "color": "danger" },
+        { "key": "ESS NFB 故障", "color": "danger" },
+        { "key": "ESS 預充 Relay 故障", "color": "danger" },
+        { "key": "ESS 高壓主繼電器故障", "color": "danger" },
+        { "key": "BCU 自檢故障", "color": "danger" },
+        { "key": "ESS 高壓負繼電器故障", "color": "danger" },
+        { "key": "過壓保護", "color": "danger" },
+        { "key": "欠壓保護", "color": "danger" },
+        { "key": "過溫充電保護", "color": "danger" },
+        { "key": "過溫放電保護", "color": "danger" },
+        { "key": "低溫充電保護", "color": "danger" },
+        { "key": "低溫放電保護", "color": "danger" },
+        { "key": "過流充電保護", "color": "danger" },
+        { "key": "過流放電保護", "color": "danger" },
+        { "key": "欠絕緣保護", "color": "danger" },
+        { "key": "過SOC保護", "color": "danger" },
+        { "key": "SOC 保護下", "color": "danger" },
+        { "key": "電壓不平衡保護", "color": "danger" },
+        { "key": "溫度不平衡保護", "color": "danger" },
+        { "key": "氣體過壓保護", "color": "danger" },
+        { "key": "HVIL 故障", "color": "danger" },
+        { "key": "BMU 通信故障", "color": "danger" }
+    ],
+    "DCP": [
+        { "key": 0, "color": "dark" },
+        { "key": 1, "color": "success" }
+    ]
+}

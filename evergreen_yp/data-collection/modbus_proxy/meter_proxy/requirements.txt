@@ -1,0 +1,2 @@
+modbus-proxy~=0.6.8
+PyYAML == 6.0

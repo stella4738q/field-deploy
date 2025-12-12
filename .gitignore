@@ -1,2 +1,3 @@
 /.idea
 /evergreen_yp/ems-server-1/batch_process/rapid_deploy
+.DS_Store

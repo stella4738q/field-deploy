@@ -1,0 +1,5 @@
+location /relay-api/ {
+    proxy_pass          http://relay-api:5000/VCB/;
+    proxy_set_header    X-Forwarded-For $remote_addr;
+}
+

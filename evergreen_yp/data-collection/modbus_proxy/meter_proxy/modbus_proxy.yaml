@@ -1,0 +1,31 @@
+devices:
+# 場內總表
+- modbus:
+    url: 192.168.100.150:502
+  listen:
+    bind: 0:6004
+# 太陽能分表1
+- modbus:
+    url: 192.168.100.151:502
+  listen:
+    bind: 0:6005
+# 太陽能分表2
+- modbus:
+    url: 192.168.100.152:502
+  listen:
+    bind: 0:6006
+# VCB電表
+- modbus:
+    url: 192.168.100.153:502
+  listen:
+    bind: 0:6007
+# MP-BESS-A
+- modbus:
+    url: 192.168.100.154:502
+  listen:
+    bind: 0:6008
+# MP-BESS-B
+- modbus:
+    url: 192.168.100.155:502
+  listen:
+    bind: 0:6009
