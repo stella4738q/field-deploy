@@ -1,0 +1,97 @@
+{
+  "SOC": {
+    "Range" : [
+      {"color": "#e84118", "range": [0,10]  }, 
+        {"color": "#fbc531", "range": [10,20]  }, 
+        {"color": "#4cd137", "range": [20,80]}, 
+        {"color": "#fbc531", "range": [80,90 ]}, 
+        {"color": "#e84118", "range": [90,100]} 
+    ],
+    "Percentage" : [
+      [0.1, "#fd666d"],
+      [0.47, "gold"],
+      [0.9, "limegreen"],
+      [1, "silver"]
+    ],
+    "Progress": [
+      {"color": "#e84118", "percentage": 10 }, 
+      {"color": "#fbc531", "percentage": 20 }, 
+      {"color": "#4cd137", "percentage": 80 }, 
+      {"color": "#fbc531", "percentage": 90 }, 
+      {"color": "#e84118", "percentage": 100 } 
+    ]
+
+  },
+  "Humidity": {
+      "Range": [ 
+      {"color": "#e84118", "range": [0,45], "percentage": 0.44}, 
+      {"color": "#44bd32", "range": [45,65], "percentage": 0.65}, 
+      {"color": "#00a8ff", "range": [65,100], "percentage": 1} 
+    ],
+    "Percentage" : [
+      [ 0.44, "#e84118"  ], 
+      [ 0.65, "#44bd32"  ], 
+      [  1 ,  "#00a8ff"  ] 
+    ]
+  },
+  "TemperatureEnv": {
+      "Range" : [  
+        {"color": "#00a8ff", "range": [0,15], "percentage": 0.15}, 
+        {"color": "#fbc531", "range": [15,27], "percentage": 0.27}, 
+        {"color": "#e84118", "range": [27,100], "percentage": 0.100} 
+      ],
+      "Percentage" : [
+        [0.15  ,"#00a8ff" ], 
+        [0.27 ,"#fbc531" ], 
+        [1    ,"#e84118"  ] 
+      ]
+  },
+  "TemperatureBMS": {
+      "Range" : [  
+        {"color": "#00a8ff", "range": [0,65], "percentage": 0.65}, 
+        {"color": "#44bd32", "range": [65,78], "percentage": 0.78}, 
+        {"color": "#e84118", "range": [78,100], "percentage": 0.100} 
+      ],
+      "Percentage" : [
+        [0.65  ,"#00a8ff" ], 
+        [0.78 ,"#fbc531" ], 
+        [1    ,"#e84118"  ] 
+      ],
+      "Progress" : [  
+        {"color": "blue", "percentage": 20}, 
+        {"color": "darkorange", "percentage": 40}, 
+        {"color": "red", "percentage": 60} 
+      ]
+  },
+  "TemperatureUPS": {
+    "Range" : [  
+      {"color": "#00a8ff", "range": [0,28], "percentage": 0.28}, 
+      {"color": "#44bd32", "range": [28,35], "percentage": 0.35}, 
+      {"color": "#e84118", "range": [35,100], "percentage": 0.100} 
+    ],
+    "Percentage" : [
+      [0.28  ,"#00a8ff" ], 
+      [0.35 ,"#fbc531" ], 
+      [1    ,"#e84118"  ] 
+    ]
+  },
+  "TemperatureTR": {
+      "Range" : [  
+        {"color": "#00a8ff", "range": [0,15], "percentage": 0.15}, 
+        {"color": "#00DB00", "range": [15,55], "percentage": 0.55}, 
+        {"color": "#fbc531", "range": [55,70], "percentage": 0.7}, 
+        {"color": "#e84118", "range": [70,100], "percentage": 0.100} 
+      ],
+      "Percentage" : [
+        [0.15  ,"#00a8ff" ], 
+        [0.55 ,"#00DB00" ], 
+        [0.7 ,"#fbc531" ], 
+        [1    ,"#e84118"  ] 
+      ]
+  },
+  "Performance" : [
+    [0.3  ,"#e84118" ], 
+    [0.7 ,"#00a8ff" ], 
+    [1    ,"#44bd32"  ] 
+  ]
+}

@@ -1,0 +1,27 @@
+services:
+  web-socket-server:
+    image: "femc/femc-web-socket-server:v1.0.0"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: web-socket-server
+    restart: always
+    expose:
+      - "8009"
+    ports:
+      - "8009:8009"
+    environment:
+      - TZ=Asia/Taipei
+    command: ["python", "main.py"]
+    volumes:
+      - ./logs:/app/logs
+      - ./config.ini:/app/config.ini
+      - ./config:/app/config
+      - ./ssl_cert/:/app/ssl_cert
+      - /mnt/nas/storage:/app/data
+    networks:
+      - femc_ems_network
+
+networks:
+  femc_ems_network:
+    external: true

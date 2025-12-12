@@ -1,0 +1,159 @@
+{
+    "nodes": [
+        {
+            "id": "台電",
+            "type": "input",
+            "data": {},
+            "label": "台電",
+            "position": {
+                "x": 389.45213941558865,
+                "y": 67.16987439728167
+            },
+            "class": "light",
+            "style": {
+                "width": "150px",
+                "height": "40px",
+                "textAlign": "center",
+                "borderColor": "black"
+            }
+        },
+        {
+            "id": "高壓盤",
+            "type": "default",
+            "data": {},
+            "label": "高壓盤",
+            "position": {
+                "x": 389.551271652253,
+                "y": 213.48696367847128
+            },
+            "class": "border-success"
+        },
+        {
+            "id": "TR",
+            "type": "default",
+            "data": {},
+            "label": "TR",
+            "position": {
+                "x": 444.5197283070618,
+                "y": 337.86547534866804
+            },
+            "class": "light",
+            "style": {
+                "width": "40px",
+                "height": "40px",
+                "borderRadius": "50%",
+                "textAlign": "center",
+                "borderColor": "black"
+            }
+        },
+        {
+            "id": "PCS",
+            "type": "default",
+            "data": {},
+            "label": "PCS",
+            "position": {
+                "x": 389.78776690040826,
+                "y": 470.2152757680051
+            },
+            "class": "light",
+            "style": {
+                "width": "150px",
+                "height": "40px",
+                "textAlign": "center",
+                "borderColor": "#3081D0"
+            }
+        },
+        {
+            "id": "BMS",
+            "type": "output",
+            "data": {},
+            "label": "BMS",
+            "position": {
+                "x": 389.3602631277996,
+                "y": 620.6820598313259
+            },
+            "class": "light",
+            "style": {
+                "width": "150px",
+                "height": "40px",
+                "textAlign": "center",
+                "borderColor": "#FF3FA4"
+            }
+        },
+
+        {
+            "id": "Meter_INFO",
+            "type": "teleportable",
+            "data": {
+                "P": null,
+                "Q": null,
+                "S": null,
+                "V": null,
+                "I": null
+            },
+            "label": "info",
+            "position": {
+                "x": 600,
+                "y": 162
+            },
+            "class": "border-primary"
+        },
+        {
+            "id": "PCS_INFO",
+            "type": "PCSportable",
+            "data": {
+                "運行模式": "",
+                "功率": ""
+            },
+            "label": "info",
+            "position": {
+                "x": 600,
+                "y": 460
+            },
+            "class": "border-primary"
+        },
+        {
+            "id": "BMS_INFO",
+            "type": "BMSportable",
+            "data": {
+                "運行模式": ""
+            },
+            "label": "info",
+            "position": {
+                "x": 600,
+                "y": 625
+            },
+            "class": "border-primary"
+        }
+    ],
+    "edges": [
+        {
+            "id": "台電__高壓盤",
+            "type": "default",
+            "source": "台電",
+            "target": "高壓盤"
+        },
+        {
+            "id": "高壓盤__TR",
+            "type": "default",
+            "source": "高壓盤",
+            "target": "TR"
+        },
+        {
+            "id": "TR__PCS",
+            "type": "default",
+            "source": "TR",
+            "target": "PCS"
+        },
+        {
+            "id": "PCS__BMS",
+            "type": "default",
+            "source": "PCS",
+            "target": "BMS"
+        }
+    ],
+    "position": [
+        534.9458871594002,
+        129.85210124903244
+    ]
+}

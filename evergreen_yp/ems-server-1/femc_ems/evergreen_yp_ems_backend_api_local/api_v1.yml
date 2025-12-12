@@ -1,0 +1,2017 @@
+openapi: 3.0.0
+
+
+info:
+  version: 1.0.0
+  title: EMS Dashboard API
+  description: EMS Dashboard API
+
+
+servers:
+  - url: https://localhost/api/v1
+
+
+tags:
+  - name: ACS
+    description: Access Control System
+  - name: FAS
+    description: Fire Alarm System
+  - name: PCS
+    description: Process Control System
+  - name: ESS
+    description: Energy Storage System Cabinet
+  - name: BID
+    description: Bid Management
+
+
+components:
+  ####################
+  # Common data models
+  ####################
+
+  schemas:
+    # Schema for error response body
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+        - code
+        - message
+
+  ####################
+  # Common parameters
+  ####################
+  parameters:
+    PageLimit:
+      name: limit
+      in: query
+      description: Limits the number of items on a page
+      schema:
+        type: integer
+    PageOffset:
+      name: page
+      in: query
+      description: Specifies the page number of the artists to be displayed
+      schema:
+        type: integer
+
+  #######################
+  # Common request bodies
+  #######################
+  requestBodies:
+    NewItem:
+      description: A JSON object containing item data
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+          examples:
+            tshirt:
+              $ref: '#/components/examples/tshirt'
+
+  ####################
+  # Security
+  ####################
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+
+  ####################
+  # Common responses
+  ####################
+  responses:
+    NotFound:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Invalid:
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+    5XXError:
+      description: Unexpected error.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+
+    Success:
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              data:
+                type: object
+                example:
+                  x:
+                    - a
+                    - b
+                  y:
+                    - 1
+                    - 2
+
+    Success_array_object:
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              data:
+                type: array
+                items:
+                    type: object
+
+    Success_message:
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+
+
+
+  ######################################
+  # Common examples of input/output data
+  ######################################
+  examples:
+    tshirt:
+      summary: Sample T-shirt data
+      value:
+        # Example value starts here
+        id: 17
+        name: T-shirt
+        description: 100% cotton shirt
+        categories: [clothes]
+
+
+
+security:
+  - BasicAuth: []
+
+
+
+paths:
+  /fields:
+    get:
+      tags:
+        - ACS
+      description: Get Filed List
+      parameters:
+        - name: name
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_array_object"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+    post:
+      tags:
+        - ACS
+      description: Create or Modify Field
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                uid:
+                  type: string
+                name:
+                  type: string
+                address:
+                  type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_message"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+    delete:
+      tags:
+          - ACS
+      description: Delete Field
+      parameters:
+        - name: uid
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_message"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+  /equipments:
+    get:
+      tags:
+        - ACS
+      description: Get Equipments List
+      parameters:
+        - name: field_id
+          in: query
+          schema:
+            type: string
+        - name: parent_id
+          in: query
+          schema:
+            type: string
+        - name: type
+          in: query
+          schema:
+            type: string
+        - name: name
+          in: query
+          schema:
+            type: string
+        - name: status
+          in: query
+          schema:
+            type: string
+        - name: geo_location
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_array_object"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+    post:
+      tags:
+        - ACS
+      description: Create or Modify Equipment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                uid:
+                  type: string
+                field_id:
+                  type: string
+                parent_id:
+                  type: string
+                type:
+                  type: string
+                name:
+                  type: string
+                status:
+                  type: string
+                geo_location:
+                  type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_message"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+    delete:
+      tags:
+          - ACS
+      description: Delete Equipment
+      parameters:
+        - name: uid
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_message"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+  /field/info:
+    get:
+      tags:
+        - ESS
+      description: Get Cabinet Info.
+      parameters:
+        - name: field_id
+          in: query
+          schema:
+            type: string
+        - name: equipment_id
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_array_object"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+  /cabinet/info:
+    get:
+      tags:
+        - ESS
+      description: Get Cabinet Info.
+      parameters:
+        - name: field_id
+          in: query
+          schema:
+            type: string
+        - name: equipment_id
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_array_object"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+  /cabinet/air_in_info:
+    get:
+      tags:
+        - ESS
+      description: Get Air Info in Cabinet
+      parameters:
+        - name: field_id
+          in: query
+          schema:
+            type: string
+        - name: equipment_id
+          in: query
+          schema:
+            type: string
+        - name: datetime
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_array_object"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+  /cabinet/fire_info:
+    get:
+      tags:
+        - ESS
+      description: Get Fire Info in Cabinet
+      parameters:
+        - name: field_id
+          in: query
+          schema:
+            type: string
+        - name: equipment_id
+          in: query
+          schema:
+            type: string
+        - name: datetime
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_array_object"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+  /cabinet/pcs_info:
+    get:
+      tags:
+        - ESS
+      description: Get PCS Info
+      parameters:
+        - name: field_id
+          in: query
+          schema:
+            type: string
+        - name: equipment_id
+          in: query
+          schema:
+            type: string
+        - name: datetime
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_array_object"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+  /cabinet/access_info:
+    get:
+      tags:
+        - ESS
+      description: Get Access Info in Cabinet
+      parameters:
+        - name: field_id
+          in: query
+          schema:
+            type: string
+        - name: equipment_id
+          in: query
+          schema:
+            type: string
+        - name: datetime
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_array_object"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+  /cabinet/bms_info:
+    get:
+      tags:
+        - ESS
+      description: Get BMS Info in Cabinet
+      parameters:
+        - name: field_id
+          in: query
+          schema:
+            type: string
+        - name: equipment_id
+          in: query
+          schema:
+            type: string
+        - name: datetime
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_array_object"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+  /cabinet/rack_info:
+    get:
+      tags:
+        - ESS
+      description: Get Rack Info of BMS in Cabinet
+      parameters:
+        - name: field_id
+          in: query
+          schema:
+            type: string
+        - name: rack_id
+          in: query
+          schema:
+            type: string
+        - name: datetime
+          in: query
+          schema:
+            type: string
+        - name: query_type
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_array_object"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+  /cabinet/ac:
+    get:
+      tags:
+        - ESS
+      description: Get BMS Info in Cabinet
+      parameters:
+        - name: field_id
+          in: query
+          schema:
+            type: string
+        - name: equipment_id
+          in: query
+          schema:
+            type: string
+        - name: datetime
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_array_object"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+  /cabinet/dc:
+    get:
+      tags:
+        - ESS
+      description: Get BMS Info in Cabinet
+      parameters:
+        - name: field_id
+          in: query
+          schema:
+            type: string
+        - name: equipment_id
+          in: query
+          schema:
+            type: string
+        - name: datetime
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_array_object"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+  /field/meter:
+    get:
+      tags:
+        - ESS
+      description: Get Meter Info in Field
+      parameters:
+        - name: field_id
+          in: query
+          schema:
+            type: string
+        - name: equipment_id
+          in: query
+          schema:
+            type: string
+        - name: datetime
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_array_object"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+  /cabinet/soc_curve:
+    get:
+      tags:
+        - ESS
+      description: Returns today's winning bid output
+      parameters:
+        - name: field_id
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: equipment_id
+          in: query
+          schema:
+            type: string
+        - name: datetime
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+  /cabinet/eci:
+    post:
+      tags:
+        - ESS
+      description: Returns ECI, ICI Result
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                field_id:
+                  type: string
+                equipment_id:
+                  type: array
+                  items:
+                    type: string
+                datetime:
+                  type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_array_object"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+  /cabinet/anomaly_detection:
+    post:
+      tags:
+        - ESS
+      description: Returns Anomaly Detection Result
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                field_id:
+                  type: string
+                equipment_id:
+                  type: array
+                  items:
+                    type: string
+                datetime:
+                  type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_array_object"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+
+  # /case_info/acs/monitor/conn_status:
+  #   get:
+  #     description: Returns access control system connection status
+  #     tags:
+  #       - ACS
+  #     parameters:
+  #       - name: location
+  #         in: query
+  #         required: true
+  #         schema:
+  #           type: string
+  #     responses:
+  #       '200':
+  #         description: success
+  #       '400':
+  #         $ref: '#/components/responses/Invalid'
+  #       '401':
+  #         $ref: '#/components/responses/Unauthorized'
+  #       '404':
+  #         $ref: '#/components/responses/NotFound'
+  #       '5XX':
+  #         $ref: '#/components/responses/5XXError'
+
+  # /case_info/fas/{location}:
+  #   get:
+  #     description: Returns Fire Alarm System Info
+  #     tags:
+  #       - FAS
+  #     parameters:
+  #       - name: location
+  #         in: path
+  #         required: true
+  #         schema:
+  #           type: string
+  #     responses:
+  #       '200':
+  #         description: Successful response
+  #       '400':
+  #         $ref: '#/components/responses/Invalid'
+  /pi_data:
+    post:
+      description: Returns pi data
+      parameters:
+        - name: url
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: paramater
+          in: query
+          schema:
+            type: string
+        - name: auth
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+
+  /quality/sbspm:
+    get:
+      description: Returns SBSPM (Second By Second Performance Measure)
+      parameters:
+        - name: field_id
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: equipment_id
+          in: query
+          schema:
+            type: string
+        - name: datetime
+          in: query
+          schema:
+            type: string
+        - name: n_data
+          in: query
+          schema:
+            type: integer
+      responses:
+        '200':
+          $ref: "#/components/responses/Success"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+  /system/instant/freq_output:
+    get:
+      description: Returns instant system frequency output
+      parameters:
+        - name: field_id
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: equipment_id
+          in: query
+          schema:
+            type: string
+        - name: datetime
+          in: query
+          schema:
+            type: string
+        - name: n_data
+          in: query
+          schema:
+            type: integer
+      responses:
+        '200':
+          $ref: "#/components/responses/Success"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+  /system/bid/winning:
+    get:
+      description: Returns today's winning bid
+      parameters:
+        - name: field_id
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: datetime
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_array_object"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+  /system/bid/winning_curve:
+    get:
+      description: Returns today's winning bid output
+      parameters:
+        - name: field_id
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: datetime
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+  /system/bid/winning_gantt:
+    get:
+      description: Returns today's winning bid output
+      parameters:
+        - name: datetime
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: n_data
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          $ref: "#/components/responses/Success"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+  /system/bid/amount:
+    get:
+      description: Returns winning bid amount output
+      parameters:
+        - name: field_id
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_array_object"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+  /system/capacity/amount:
+      get:
+        description: Returns winning bid amount output
+        parameters:
+          - name: field_id
+            in: query
+            required: true
+            schema:
+              type: string
+        responses:
+          '200':
+            $ref: "#/components/responses/Success_array_object"
+          '400':
+            $ref: '#/components/responses/Invalid'
+
+  /system/charge/total_time:
+    get:
+      description: Returns charge total time output
+      parameters:
+        - name: field_id
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_array_object"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+  /system/scheduling/balanced:
+    get:
+      description: Returns balanced scheduling info
+      parameters:
+        - name: field_id
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: bid_id
+          in: query
+          schema:
+            type: string
+        - name: equipment_id
+          in: query
+          schema:
+            type: string
+        - name: datetime
+          in: query
+          schema:
+            type: integer
+        - name: order
+          in: query
+          schema:
+            type: integer
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_array_object"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+  /alert/real_time:
+    get:
+      description: Returns Real Time ALert info
+      parameters:
+        - name: field_id
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: equipment_id
+          in: query
+          schema:
+            type: string
+        - name: level
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_array_object"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+  /alert/historical:
+    get:
+      description: Returns Historical ALert info
+      parameters:
+        - name: field_id
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: equipment_id
+          in: query
+          schema:
+            type: string
+        - name: level
+          in: query
+          schema:
+            type: string
+        - name: start_time
+          in: query
+          schema:
+            type: string
+        - name: end_time
+          in: query
+          schema:
+            type: string
+        - name: order_field
+          in: query
+          schema:
+            type: string
+        - name: order_type
+          in: query
+          schema:
+            type: string
+        - $ref: "#/components/parameters/PageLimit"
+        - $ref: "#/components/parameters/PageOffset"
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_array_object"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+  /alert/historical_export:
+    get:
+      description: Export Historical ALert info
+      parameters:
+        - name: field_id
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: equipment_id
+          in: query
+          schema:
+            type: string
+        - name: level
+          in: query
+          schema:
+            type: string
+        - name: start_time
+          in: query
+          schema:
+            type: string
+        - name: end_time
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_array_object"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+  /file/import:
+    post:
+      description: Import file from local
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                filename:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_array_object"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+  /report/monitor:
+    post:
+      description: Returns monitor data report
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                field_id:
+                  type: string
+                equipment_id:
+                  type: string
+                start_time:
+                  type: string
+                end_time:
+                  type: string
+                trans_substation:
+                  type: string
+                station:
+                  type: string
+                unit:
+                  type: string
+                limit:
+                  type: integer
+                offset:
+                  type: integer
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_array_object"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+  /report/max_demand:
+    post:
+      description: Returns max. demand calculation report
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                field_id:
+                  type: string
+                equipment_id:
+                  type: string
+                start_time:
+                  type: string
+                end_time:
+                  type: string
+                trans_substation:
+                  type: string
+                station:
+                  type: string
+                unit:
+                  type: string
+                limit:
+                  type: integer
+                offset:
+                  type: integer
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_array_object"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+  /report/power:
+    post:
+      description: Returns power report
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                field_id:
+                  type: string
+                datetime:
+                  type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_array_object"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+  /report/actual:
+    post:
+      description: Returns actual report
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                field_id:
+                  type: string
+                datetime:
+                  type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_array_object"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+
+  /permission/user:
+    get:
+      tags:
+        - Permission
+      description: Get Role Info.
+      parameters:
+        - name: id
+          in: query
+          schema:
+            type: string
+        - name: name
+          in: query
+          schema:
+            type: string
+        - name: email
+          in: query
+          schema:
+            type: string
+        - name: mobile
+          in: query
+          schema:
+            type: string
+        - name: is_admin
+          in: query
+          schema:
+            type: string
+        - name: account
+          in: query
+          schema:
+            type: string
+        - name: enable
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_array_object"
+        '400':
+          $ref: '#/components/responses/Invalid'
+    post:
+      tags:
+        - Permission
+      description: Create or Modify Role Info.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                name:
+                  type: string
+                email:
+                  type: string
+                mobile:
+                  type: string
+                is_admin:
+                  type: string
+                account:
+                  type: string
+                password:
+                  type: string
+                enable:
+                  type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_array_object"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+    delete:
+      tags:
+          - Permission
+      description: Delete Role Info.
+      parameters:
+        - name: id
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_message"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+  /permission/user/login:
+    post:
+      tags:
+        - Permission
+      description: Create or Modify Role Info.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                account:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_message"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+  /permission/user/reset:
+    post:
+      tags:
+        - Permission
+      description: Create or Modify Role Info.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_message"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+  /permission/user/change_password:
+    post:
+      tags:
+        - Permission
+      description: Create or Modify Role Info.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_message"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+  /permission/user/field:
+    get:
+      tags:
+        - Permission
+      description: Get User Field
+      parameters:
+        - name: user_id
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_array_object"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+    post:
+        tags:
+          - Permission
+        description: Create User Field Info.
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user_id:
+                    type: string
+                  field_id:
+                    type: string
+        responses:
+          '200':
+            $ref: "#/components/responses/Success_array_object"
+          '400':
+            $ref: '#/components/responses/Invalid'
+
+    delete:
+      tags:
+          - Permission
+      description: Delete User Field Info.
+      parameters:
+        - name: id
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_message"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+  /permission/role:
+    get:
+      tags:
+        - Permission
+      description: Get Role Info.
+      parameters:
+        - name: id
+          in: query
+          schema:
+            type: string
+        - name: name
+          in: query
+          schema:
+            type: string
+        - name: enable
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_array_object"
+        '400':
+          $ref: '#/components/responses/Invalid'
+    post:
+      tags:
+        - Permission
+      description: Create or Modify Role Info.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                name:
+                  type: string
+                enable:
+                  type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_array_object"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+    delete:
+      tags:
+          - Permission
+      description: Delete Role Info.
+      parameters:
+        - name: id
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_message"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+  /permission/user/role:
+    get:
+      tags:
+        - Permission
+      description: Get User Field
+      parameters:
+        - name: user_id
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_array_object"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+    post:
+        tags:
+          - Permission
+        description: Create User Field Info.
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user_id:
+                    type: string
+                  field_id:
+                    type: string
+        responses:
+          '200':
+            $ref: "#/components/responses/Success_array_object"
+          '400':
+            $ref: '#/components/responses/Invalid'
+
+    delete:
+      tags:
+          - Permission
+      description: Delete User Field Info.
+      parameters:
+        - name: id
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_message"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+  /permission/user_role_by_role_id:
+    delete:
+      tags:
+        - Permission
+      description: Delete User Role By Role ID
+      parameters:
+        - name: role_id
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_message"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+  /resource/by_case_id:
+    get:
+      tags:
+        - BID
+      description: Get All Resource or one by case id
+      parameters:
+        - name: code
+          in: query
+          schema:
+            type: string
+        - name: service
+          in: query
+          schema:
+            type: string
+        - name: status
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_array_object"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+    post:
+      tags:
+        - BID
+      description: Create or Modify Resource by case id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                case_id:
+                  type: string
+                code:
+                  type: string
+                service:
+                  type: string
+                status:
+                  type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_array_object"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+    delete:
+      tags:
+        - BID
+      description: Delete Resource by case id
+      parameters:
+        - name: resources_id
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_array_object"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+  /resource/by_resources_id:
+    get:
+      tags:
+        - BID
+      description: Get All Resource or one by resources id
+      parameters:
+        - name: resources_id
+          in: query
+          schema:
+            type: string
+        - name: code
+          in: query
+          schema:
+            type: string
+        - name: equipment_type
+          in: query
+          schema:
+            type: string
+        - name: name
+          in: query
+          schema:
+            type: string
+        - name: capacity
+          in: query
+          schema:
+            type: string
+        - name: communication
+          in: query
+          schema:
+            type: string
+        - name: implement
+          in: query
+          schema:
+            type: string
+        - name: field_id
+          in: query
+          schema:
+            type: string
+        - name: case_id
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_array_object"
+        '400':
+          $ref: '#/components/responses/Invalid'
+    post:
+      tags:
+        - BID
+      description: Create or Modify Resource by resources id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                resources_id:
+                  type: string
+                code:
+                  type: string
+                equipment_type:
+                  type: string
+                name:
+                  type: string
+                capacity:
+                  type: string
+                communication:
+                  type: string
+                implement:
+                  type: string
+                field_id:
+                  type: string
+                case_id:
+                  type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_array_object"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+    delete:
+      tags:
+        - BID
+      description: Delete Resource
+      parameters:
+        - name: resources_id
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_array_object"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+  /operation/bid:
+    get:
+      tags:
+        - BID
+      description: Get bid
+      parameters:
+        - name: date
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_array_object"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+  /operation/bid/download_example:
+    get:
+      tags:
+        - BID
+      description: Get bid download_example
+      parameters:
+        - name: date
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_array_object"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+  /operation/bid/upload_information:
+    post:
+      tags:
+        - BID
+      description: Get bid upload_information
+      parameters:
+        - name: date
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_array_object"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+  /operation/bid/download:
+    get:
+      tags:
+        - BID
+      description: Get bid upload_information
+      parameters:
+        - name: date
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_array_object"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+  /operation/bid/upload_result:
+    post:
+      tags:
+        - BID
+      description: Get bid upload_information
+      parameters:
+        - name: date
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_array_object"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+  /operation/bid/add_form:
+    post:
+      tags:
+        - BID
+      description: Get bid add_form
+      parameters:
+        - name: date
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_array_object"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+  /operation/bid_history:
+    get:
+      tags:
+        - BID
+      description: Get bid history
+      parameters:
+        - name: date
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_array_object"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+  /operation/bid_history/list:
+    get:
+      tags:
+        - BID
+      description: Get bid_history list
+      parameters:
+        - name: case_id
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_array_object"
+        '400':
+          $ref: '#/components/responses/Invalid'
+    delete:
+      tags:
+        - BID
+      description: bid_history list
+      parameters:
+        - name: case_id
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_array_object"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+  /operation/bid_history/plot_data:
+    get:
+      tags:
+        - BID
+      description: Get bid_history plot data
+      parameters:
+        - name: case_id
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_array_object"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+
+  /operation/bank_statement:
+    get:
+      tags:
+        - BID
+      description: Get bank_statement
+      parameters:
+        - name: year
+          in: query
+          schema:
+            type: string
+        - name: month
+          in: query
+          schema:
+            type: string
+        - name: case_id
+          in: query
+          schema:
+            type: string
+        - name: resource
+          in: query
+          schema:
+            type: string
+        - name: range
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_array_object"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+  /operation/complement:
+    get:
+      tags:
+        - BID
+      description: Get bid_history list & plot data
+      parameters:
+        - name: date
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_array_object"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+  /report/spinning_regulation/daily:
+    get:
+      tags:
+        - BID
+      description: Get spinning & regulation daily data
+      parameters:
+        - name: date
+          in: query
+          schema:
+            type: string
+        - name: uid
+          in: query
+          schema:
+            type: string
+        - name: case_id
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_array_object"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+  /report/spinning_regulation/daily/plot_data:
+    get:
+      tags:
+        - BID
+      description: Get spinning & regulation daily plot_data
+      parameters:
+        - name: date
+          in: query
+          schema:
+            type: string
+        - name: uid
+          in: query
+          schema:
+            type: string
+        - name: case_id
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_array_object"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+  /report/supplement/daily:
+    get:
+      tags:
+        - BID
+      description: Get supplement daily data
+      parameters:
+        - name: date
+          in: query
+          schema:
+            type: string
+        - name: uid
+          in: query
+          schema:
+            type: string
+        - name: case_id
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_array_object"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+  /report/supplement/daily/plot_data:
+    get:
+      tags:
+        - BID
+      description: Get supplement daily data plot_data
+      parameters:
+        - name: date
+          in: query
+          schema:
+            type: string
+        - name: uid
+          in: query
+          schema:
+            type: string
+        - name: case_id
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_array_object"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+  /report/regulation:
+    get:
+      tags:
+        - BID
+      description: Get regulation data
+      parameters:
+        - name: date
+          in: query
+          schema:
+            type: string
+        - name: uid
+          in: query
+          schema:
+            type: string
+        - name: case_id
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_array_object"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+  /report/regulation/plot_data:
+    get:
+      tags:
+        - BID
+      description: Get regulation data
+      parameters:
+        - name: date
+          in: query
+          schema:
+            type: string
+        - name: uid
+          in: query
+          schema:
+            type: string
+        - name: case_id
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_array_object"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+  /report/spinning_supplement:
+    get:
+      tags:
+        - BID
+      description: Get spinning & supplement data
+      parameters:
+        - name: date
+          in: query
+          schema:
+            type: string
+        - name: uid
+          in: query
+          schema:
+            type: string
+        - name: case_id
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_array_object"
+        '400':
+          $ref: '#/components/responses/Invalid'
+
+  /report/spinning_supplement/plot_data:
+    get:
+      tags:
+        - BID
+      description: Get spinning & supplement data
+      parameters:
+        - name: date
+          in: query
+          schema:
+            type: string
+        - name: uid
+          in: query
+          schema:
+            type: string
+        - name: case_id
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: "#/components/responses/Success_array_object"
+        '400':
+          $ref: '#/components/responses/Invalid'

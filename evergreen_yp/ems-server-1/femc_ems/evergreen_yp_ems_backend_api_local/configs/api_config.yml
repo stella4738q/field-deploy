@@ -1,0 +1,63 @@
+---
+# Environment values are defined in env/.env,
+# Environment variable names should be matched with the keys (LHS) defined in env/.env
+
+storage:
+  using: 'mongodb'
+  database:
+    postgres:
+      uri: '$PG_URI'
+      port: '$PG_PORT'
+      username: '$PG_USER'
+      password: '$PG_PWD'
+      database_name: '$PG_DBNAME'
+      connection_string: '$CONNECTION_STRING'
+    mongodb:
+      localdb:
+        uri: '$MONGODB_URI'
+        port: '$MONGODB_PORT'
+        username: '$MONGODB_USER'
+        password: '$MONGODB_PWD'
+        database_name: '$MONGODB_DBNAME'
+        connection_string: '$CONNECTION_STRING'
+        replicaset: '$REPLICASET'
+        replicaset_list: '$REPLICASET_LIST'
+        key: '$MONGODB_PCS_KEY'
+    mssql:
+      uri: '$MSSQL_URI'
+      port: '$MSSQL_PORT'
+      username: '$MSSQL_USER'
+      password: '$MSSQL_PWD'
+      database_name: '$MSSQL_DBNAME'
+      connection_string: '$CONNECTION_STRING'
+    modbus:
+      uri: '$MODBUS_URI'
+      port: '$MODBUS_PORT'
+      slave_id: '$MODBUS_SLAVE_ID'
+    filesystem:
+      base_path: '$FILESYSTEM_BASE_PATH'
+    iec61850:
+      uri: '$IEC_URI'
+      port: '$IEC_PORT'
+app:
+  host: '$HOST'
+  port: '$PORT'
+  version: '$VERSION'
+  temp_folder: '$TEMP_FOLDER'
+  doc_folder: '$DOC_FOLDER'
+  log_path: '$LOG_PATH'
+  secret_key: '$SECRET_KEY'
+  session_key: '$SESSION_KEY'
+  auth_enable: '$AUTH_ENABLE'
+  auth_life: '$AUTH_LIFE'
+  request_header: '$REQUEST_HEADER'
+  field_id: '$FIELD_ID'
+  use_ssl: '$USE_SSL'
+  ssl_path: '$SSL_PATH'
+  email_account: '$EMAIL_ACCOUNT'
+  email_password: '$EMAIL_PASSWORD'
+  config_root_path: '$CONFIG_ROOT_PATH'
+  smb_user: '$SMB_USER'
+  smb_pwd: '$SMB_PWD'
+  otp_aes_key: '$OTP_AES_KEY'
+  single_login: '$SINGLE_LOGIN'

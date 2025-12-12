@@ -1,0 +1,58 @@
+{
+  "LC": [
+    { "name":"停機"	, "color": "dark", "discharge" : false },
+    { "name":"自檢"	, "color": "dark" , "discharge" : false},
+    { "name":"啟動中"	, "color": "warning", "discharge" : false },
+    { "name":"運行"	, "color": "success", "discharge" : true },
+    { "name":"故障停機中"	, "color": "danger", "discharge" : false },
+    { "name":"故障"	, "color": "danger", "discharge" : false },
+    { "name":"停機中"	, "color": "warning", "discharge" : false },
+    { "name":"自檢失敗"	, "color": "danger", "discharge" : false },
+    { "name":"啟動失敗"	, "color": "danger", "discharge" : false },
+    { "name":"停機失敗"	, "color": "danger", "discharge" : false },
+    { "name":"待機"	, "color": "success", "discharge" : true },
+    { "name":"低電量補償"	, "color": "warning", "discharge" : false },
+    { "name":"ECO模式", "color": "dark", "discharge" : false }
+  ],
+  "PCS": [
+    { "name":"待機"	, "color": "danger", "discharge" : false },
+    { "name":"靜態補償"	, "color": "warning", "discharge" : false },
+    { "name":"電池已連接"	, "color": "success", "discharge" : false },
+    { "name":"運作中"	, "color": "success", "discharge" : false },
+    { "name":"除錯模式"	, "color": "success", "discharge" : false },
+    { "name":"斷開"	, "color": "danger", "discharge" : false },
+    { "name":"斷開中"	, "color": "warning", "discharge" : false },
+    { "name":"連接中"	, "color": "warning", "discharge" : false },
+    { "name":"連接電網"	, "color": "warning", "discharge" : false }
+  ],
+  "BMS": [
+    { "name": "初始化", "color": "warning", "discharge" : false },
+    { "name": "充電", "color": "success", "discharge" : false },
+    { "name": "放電", "color": "success", "discharge" : true },
+    { "name": "就緒", "color": "success", "discharge" : false },
+    { "name": "群集維護", "color": "warning", "discharge" : false },
+    { "name": "禁止充電", "color": "danger", "discharge" : false },
+    { "name": "禁止放電", "color": "danger", "discharge" : false },
+    { "name": "禁止充放電", "color": "danger", "discharge" : false },
+    { "name": "故障", "color": "danger", "discharge" : false },
+    { "name": "故障恢復", "color": "warning", "discharge" : false },
+    { "name": "測試模式", "color": "success", "discharge" : false },
+    { "name": "關機", "color": "warning", "discharge" : false },
+    { "name": "關機完成", "color": "dark", "discharge" : false }
+  ],
+  "RACK": [
+    { "name": "初始化", "color": "bg-dark", "discharge" : false },
+    { "name": "充電", "color": "bg-success", "discharge" : false },
+    { "name": "放電", "color": "bg-success", "discharge" : true },
+    { "name": "就緒", "color": "bg-success", "discharge" : false },
+    { "name": "群集維護", "color": "bg-warning", "discharge" : false },
+    { "name": "禁止充電", "color": "bg-danger", "discharge" : false },
+    { "name": "禁止放電", "color": "bg-danger", "discharge" : false },
+    { "name": "禁止充放電", "color": "bg-danger", "discharge" : false },
+    { "name": "故障", "color": "bg-danger", "discharge" : false },
+    { "name": "故障恢復", "color": "bg-warning", "discharge" : false },
+    { "name": "測試模式", "color": "bg-success", "discharge" : false },
+    { "name": "關機", "color": "bg-warning", "discharge" : false },
+    { "name": "關機完成", "color": "bg-dark", "discharge" : false }
+  ]
+}

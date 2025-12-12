@@ -1,0 +1,43 @@
+{
+  "PCS": [
+    { "name":"待機"	, "color": "dark", "discharge" : false },
+    { "name":"靜態補償"	, "color": "dark", "discharge" : false },
+    { "name":"電池已連接"	, "color": "success", "discharge" : false },
+    { "name":"運作中"	, "color": "success", "discharge" : false },
+    { "name":"除錯模式"	, "color": "success", "discharge" : false },
+    { "name":"斷開"	, "color": "dark", "discharge" : false },
+    { "name":"斷開中"	, "color": "dark", "discharge" : false },
+    { "name":"連接中"	, "color": "dark", "discharge" : false },
+    { "name":"連接電網"	, "color": "dark", "discharge" : false }
+  ],
+  "BMS": [
+    { "name": "初始化", "color": "dark", "discharge" : false },
+    { "name": "充電", "color": "success", "discharge" : false },
+    { "name": "放電", "color": "success", "discharge" : true },
+    { "name": "就緒", "color": "success", "discharge" : false },
+    { "name": "群集維護", "color": "dark", "discharge" : false },
+    { "name": "禁止充電", "color": "success", "discharge" : false },
+    { "name": "禁止放電", "color": "success", "discharge" : false },
+    { "name": "禁止充放電", "color": "success", "discharge" : false },
+    { "name": "故障", "color": "danger", "discharge" : false },
+    { "name": "故障恢復", "color": "dark", "discharge" : false },
+    { "name": "測試模式", "color": "success", "discharge" : false },
+    { "name": "關機", "color": "success", "discharge" : false },
+    { "name": "關機完成", "color": "dark", "discharge" : false }
+  ],
+  "RACK": [
+    { "name": "初始化", "color": "bg-dark", "discharge" : false },
+    { "name": "充電", "color": "bg-success", "discharge" : false },
+    { "name": "放電", "color": "bg-success", "discharge" : true },
+    { "name": "就緒", "color": "bg-success", "discharge" : false },
+    { "name": "群集維護", "color": "bg-dark", "discharge" : false },
+    { "name": "禁止充電", "color": "bg-danger", "discharge" : false },
+    { "name": "禁止放電", "color": "bg-danger", "discharge" : false },
+    { "name": "禁止充放電", "color": "bg-danger", "discharge" : false },
+    { "name": "故障", "color": "bg-danger", "discharge" : false },
+    { "name": "故障恢復", "color": "bg-dark", "discharge" : false },
+    { "name": "測試模式", "color": "bg-success", "discharge" : false },
+    { "name": "關機", "color": "bg-success", "discharge" : false },
+    { "name": "關機完成", "color": "bg-dark", "discharge" : false }
+  ]
+}

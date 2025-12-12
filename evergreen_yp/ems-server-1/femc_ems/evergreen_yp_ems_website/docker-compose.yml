@@ -1,0 +1,19 @@
+services:
+  web-app:
+    image: "femc/femc-ems-website:latest"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: web-app
+    expose:
+      - "80"
+    restart: unless-stopped
+    environment:
+      - TZ=Asia/Taipei
+    networks:
+      - femc_ems_network
+
+networks:
+  femc_ems_network:
+    external: true
+

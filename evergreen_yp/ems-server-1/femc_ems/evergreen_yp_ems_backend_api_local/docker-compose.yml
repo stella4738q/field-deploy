@@ -1,0 +1,27 @@
+services:
+  web-api:
+    image: "femc/femc-ems-backend-api_local:v1.0.0"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: web-api
+    restart: always
+    expose:
+      - "5000"
+    environment:
+      - TZ=Asia/Taipei
+    env_file:
+      - .env
+    mem_limit: 4GB
+    command: ["python", "apps/dashboard/__init__.py"]
+    volumes:
+      - ./logs:/app/logs
+      - ./docs:/app/docs
+      - /home/femc/project/share_folder:/app/share_folder
+      - /mnt/nas/storage:/app/data
+    networks:
+      - femc_ems_network
+
+networks:
+  femc_ems_network:
+    external: true
