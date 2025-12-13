@@ -1,6 +1,6 @@
 /.idea
-/evergreen_yp/ems-server-1/batch_process/rapid_deploy
 /evergreen_yp/ems-server-1/batch_process/build_code
+/evergreen_yp/ems-server-1/batch_process/rapid_deploy
 /evergreen_yp/ems-server-2/batch_process/build_code
+/evergreen_yp/ems-server-2/batch_process/rapid_deploy
 .DS_Store
-evergreen_yp/data-collection/modbus_reader/bmu/.DS_Store
