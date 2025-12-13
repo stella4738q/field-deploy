@@ -1,0 +1,20 @@
+version: "3.8"
+
+services:
+  server:
+    image: "batch-scheduler:v1.1"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      - TZ=Asia/Taipei
+    command: ["python", "main.py"]
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    volumes:
+      - ./logs:/app/logs
+      - ./config.ini:/app/config.ini
