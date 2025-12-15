@@ -41,6 +41,36 @@ HOSTS=(
 # SSH 用戶（用於連線的帳號）
 SSH_USER="femc"
 
+# 檢查是否有 SSH 金鑰認證
+SSH_METHOD="key"
+SSH_PASSWORD=""
+
+# 測試第一台主機的 SSH 連線
+log_info "檢查 SSH 連線方式..."
+if ! ssh -o BatchMode=yes -o ConnectTimeout=5 "${SSH_USER}@${HOSTS[0]}" "echo 'test'" &>/dev/null; then
+    log_warn "SSH 金鑰認證失敗，將使用密碼認證"
+
+    # 檢查是否安裝 sshpass
+    if ! command -v sshpass &> /dev/null; then
+        log_error "未安裝 sshpass 工具"
+        log_info "請執行以下命令安裝:"
+        log_info "  macOS: brew install sshpass"
+        log_info "  Ubuntu/Debian: sudo apt-get install sshpass"
+        log_info "  CentOS/RHEL: sudo yum install sshpass"
+        echo ""
+        log_info "或者設定 SSH 金鑰認證:"
+        log_info "  ssh-keygen -t rsa -b 4096"
+        log_info "  ssh-copy-id ${SSH_USER}@<主機IP>"
+        exit 1
+    fi
+
+    SSH_METHOD="password"
+    read -sp "請輸入 ${SSH_USER} 的 SSH 密碼: " SSH_PASSWORD
+    echo ""
+else
+    log_info "✓ SSH 金鑰認證可用"
+fi
+
 log_info "準備修改用戶名: ${OLD_USERNAME} -> ${NEW_USERNAME}"
 echo ""
 
@@ -48,10 +78,18 @@ echo ""
 for host in "${HOSTS[@]}"; do
     log_info "正在處理主機: ${host}"
 
-    # 執行用戶名修改命令
-    ssh "${SSH_USER}@${host}" "sudo usermod -l ${NEW_USERNAME} ${OLD_USERNAME} && \
-                                sudo groupmod -n ${NEW_USERNAME} ${OLD_USERNAME} && \
-                                sudo usermod -d /home/${NEW_USERNAME} -m ${NEW_USERNAME}"
+    # 根據認證方式執行命令
+    if [ "${SSH_METHOD}" = "password" ]; then
+        sshpass -p "${SSH_PASSWORD}" ssh -o StrictHostKeyChecking=no "${SSH_USER}@${host}" \
+            "sudo usermod -l ${NEW_USERNAME} ${OLD_USERNAME} && \
+             sudo groupmod -n ${NEW_USERNAME} ${OLD_USERNAME} && \
+             sudo usermod -d /home/${NEW_USERNAME} -m ${NEW_USERNAME}"
+    else
+        ssh "${SSH_USER}@${host}" \
+            "sudo usermod -l ${NEW_USERNAME} ${OLD_USERNAME} && \
+             sudo groupmod -n ${NEW_USERNAME} ${OLD_USERNAME} && \
+             sudo usermod -d /home/${NEW_USERNAME} -m ${NEW_USERNAME}"
+    fi
 
     if [ $? -eq 0 ]; then
         log_info "✓ ${host} 修改成功"
