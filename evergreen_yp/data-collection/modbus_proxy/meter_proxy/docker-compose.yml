@@ -1,6 +1,6 @@
 services:
   modbus-proxy:
-    image: "femc/femc-modbus-proxy:v1.0.0"
+    image: "femc/femc-modbus-proxy:latest"
     container_name: "meter_proxy"
     build:
       context: .
