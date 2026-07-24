@@ -1,0 +1,15 @@
+# MongoDB 基本骨架 — 現場依實際需求調整（版本、認證、replica set 等）
+services:
+  mongodb:
+    image: mongo:6
+    container_name: mongodb
+    restart: always
+    network_mode: host          # 照案場慣例走 host network；不需要可改 ports 映射
+    volumes:
+      - ./data:/data/db
+      - ./configdb:/data/configdb
+    environment:
+      TZ: Asia/Taipei
+      # 需要認證時取消註解並設定：
+      # MONGO_INITDB_ROOT_USERNAME: admin
+      # MONGO_INITDB_ROOT_PASSWORD: <現場設定>

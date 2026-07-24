@@ -1,0 +1,27 @@
+global
+    log /dev/log local0
+    log /dev/log local1 notice
+    daemon
+    maxconn 2048
+
+defaults
+    log     global
+    mode    http
+    option  httplog
+    option  dontlognull
+    timeout connect 5s
+    timeout client  50s
+    timeout server  50s
+
+frontend http-in
+    bind *:80
+    default_backend frontend-servers
+    option forwardfor
+
+backend frontend-servers
+    balance leastconn
+    stick-table type ip size 200k expire 30m
+    stick on src
+    http-request add-header X-Forwarded-Proto http
+    server server1 {{EMS1_IP}}:{{BACKEND_PORT}} check
+    server server2 {{EMS2_IP}}:{{BACKEND_PORT}} check
