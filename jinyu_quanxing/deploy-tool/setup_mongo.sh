@@ -46,7 +46,6 @@ log_info "  主機   : ${MONGO_HOST}（$(ssh_dest "$MONGO_HOST") port $(ssh_port
 log_info "  版本   : mongodb-org ${MONGO_VERSION}（site.env 的 MONGO_VERSION 可改）"
 log_info "  bindIp : ${MONGO_BIND_IP}"
 log_info "  ufw    : 若已啟用，放行 27017 給 EMS 機（${EMS_IPS:-無}）"
-log_warn "建議先到參考機確認現行版本（唯讀指令）: ./run.sh eg-mongo \"mongod --version\""
 confirm "確認在 ${MONGO_HOST} 原生安裝 MongoDB？"
 
 RS=$(mktemp "${TMPDIR:-/tmp}/jy_mongo.XXXXXX")

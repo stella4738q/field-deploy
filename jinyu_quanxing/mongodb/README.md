@@ -6,8 +6,7 @@
 
 ```bash
 cd ../deploy-tool
-./run.sh eg-mongo "mongod --version"   # （唯讀）先到參考機確認現行版本
-vim site.env                            # 設定 MONGO_VERSION / MONGO_BIND_IP
+vim site.env                            # 設定 MONGO_VERSION / MONGO_BIND_IP（預設最新 8.0）
 ./setup_mongo.sh                        # 原生安裝到 jy-mongo
 ```
 

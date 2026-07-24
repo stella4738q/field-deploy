@@ -2,21 +2,15 @@
 
 > ## ⚠️ 最高優先安全守則
 > **SSH 連上任何案場機器後，絕對不能亂動或亂改任何東西。**
-> hosts.conf 中 `readonly=yes` 的主機（長榮現役 IPC）**只能看**：
+> hosts.conf 中標記 `readonly=yes` 的主機（如運轉中的既有設備）**只能看**：
 > 只執行唯讀指令（`cat`、`ls`、`docker ps`…），嚴禁寫檔、安裝套件、重啟服務。
 > 所有寫入類腳本對 readonly 主機一律硬性拒絕，此為刻意設計，請勿繞過。
 
 ## 機器清單
 
-### 長榮（evergreen）現役 IPC — 純參考用，唯讀
-| 別名 | 連線 | 角色 |
-|---|---|---|
-| eg-ems1 | `ssh -p 5001 myuser@221.120.76.225` | EMS server 1（HA MASTER） |
-| eg-ems2 | `ssh -p 5002 myuser@221.120.76.225` | EMS server 2（HA BACKUP） |
-| eg-nas | `ssh -p 5003 myuser@221.120.76.225` | NAS / Samba storage |
-| eg-mongo | `ssh -p 5005 oem@221.120.76.225` | MongoDB |
+晉瑜全興新案場四台（角色照既有案場模式）：ems1 / ems2（EMS 雙機 HA）、
+nas（Samba storage）、mongo（MongoDB 原生安裝）。
 
-### 晉瑜全興新案場（部署目標）
 尚未建置。現場確認連線資訊後，到 `deploy-tool/hosts.conf` 取消 `jy-*` 註解並填入實際值，
 同時確認 `deploy-tool/site.env` 的 VIP、NAS 等參數。
 
@@ -81,7 +75,7 @@ cd jinyu_quanxing/deploy-tool
 # 6. EMS 雙機 HA（keepalived VIP + haproxy）
 ./setup_ha.sh
 
-# 7. MongoDB 原生安裝（非 docker；版本先參考 eg-mongo，見 mongodb/README.md）
+# 7. MongoDB 原生安裝（非 docker，見 mongodb/README.md）
 ./setup_mongo.sh
 
 # 8. 程式部署（對含 docker-compose.yml 的目錄通用）
@@ -90,7 +84,7 @@ cd jinyu_quanxing/deploy-tool
 
 日常操作：
 ```bash
-./connect.sh eg-ems1              # 快速連線（現役機器會顯示唯讀警告）
+./connect.sh jy-ems1              # 快速連線（readonly 主機會顯示唯讀警告）
 ./run.sh ems "docker ps"          # 對某角色批次執行
 ./push.sh jy-ems1 <本地> <遠端>    # 推檔案（readonly 主機拒絕）
 ```
