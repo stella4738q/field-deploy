@@ -33,7 +33,7 @@ jinyu_quanxing/
 ├── ems-server-1/config_file/   # EMS1 的 keepalived(MASTER)/haproxy 設定（setup_ha.sh 產生）
 ├── ems-server-2/config_file/   # EMS2 的 keepalived(BACKUP)/haproxy 設定
 ├── nas/config_file/            # Samba [storage] share 設定
-└── mongodb/                    # MongoDB docker-compose 骨架
+└── mongodb/                    # MongoDB 原生安裝說明（非 docker，照 evergreen .105 模式）
 ```
 
 ## 現場部署 SOP
@@ -61,8 +61,10 @@ cd jinyu_quanxing/deploy-tool
 # 5. EMS 雙機 HA（keepalived VIP + haproxy）
 ./setup_ha.sh
 
-# 6. 程式部署（對含 docker-compose.yml 的目錄通用）
-./deploy_app.sh jy-mongo ../mongodb
+# 6. MongoDB 原生安裝（非 docker；版本先參考 eg-mongo，見 mongodb/README.md）
+./setup_mongo.sh
+
+# 7. 程式部署（對含 docker-compose.yml 的目錄通用）
 ./deploy_app.sh jy-ems1 ../ems-server-1/batch_process   # 配置備妥後
 ```
 
@@ -84,6 +86,7 @@ cd jinyu_quanxing/deploy-tool
 | `bootstrap.sh` | docker/compose/時區/常用套件 | **拒絕** |
 | `setup_nas.sh` | samba server＋cifs fstab 掛載 | **拒絕** |
 | `setup_ha.sh` | keepalived＋haproxy 雙機 HA | **拒絕** |
+| `setup_mongo.sh` | MongoDB 原生安裝（apt mongodb-org，非 docker） | **拒絕** |
 | `deploy_app.sh` | 推配置＋docker compose up | **拒絕** |
 
 設計細節：
