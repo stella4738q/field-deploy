@@ -49,7 +49,8 @@ echo "===== [remote] 環境建置開始: $(hostname) ====="
 
 echo "--- [1/5] apt 套件 ---"
 sudo apt-get update
-sudo apt-get install -y git vim htop curl rsync cifs-utils
+sudo apt-get install -y openssh-server git vim htop curl rsync cifs-utils
+sudo systemctl enable ssh   # 確保重開機後 SSH 還在
 
 echo "--- [2/5] Docker ---"
 if command -v docker >/dev/null 2>&1; then

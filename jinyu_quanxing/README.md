@@ -40,10 +40,26 @@ jinyu_quanxing/
 
 所有腳本都支援 `--dry-run`（只印出將執行的動作）；會改動遠端的腳本執行前需輸入 `yes` 確認。
 
+### 前置作業（第一次到現場，四台都要）
+
+新機器還沒有 SSH server 前，部署工具連不上去。先在**各主機 console**（接鍵盤螢幕，
+或用 USB 帶 `deploy-tool/console_prep.sh` 過去）執行：
+
+```bash
+# 在 ems1 / ems2 / nas / mongo 四台主機上各跑一次
+./console_prep.sh          # 裝 openssh-server + 開機啟動，並顯示本機 IP
+# 沒帶腳本的話，手動等效指令：
+#   sudo apt-get update && sudo apt-get install -y openssh-server
+#   sudo systemctl enable --now ssh
+#   ip -4 addr        # 記下 IP 填 hosts.conf
+```
+
+### 部署流程（回到筆電）
+
 ```bash
 cd jinyu_quanxing/deploy-tool
 
-# 0. 填 hosts.conf（啟用 jy-* 主機）與 site.env，然後檢查
+# 0. 填 hosts.conf（啟用 jy-* 主機、填上一步記下的 IP）與 site.env，然後檢查
 ./run.sh --list
 
 # 1. SSH 金鑰佈建 + ~/.ssh/config alias（各機各輸入一次密碼）
@@ -79,6 +95,7 @@ cd jinyu_quanxing/deploy-tool
 
 | 腳本 | 功能 | 對 readonly 主機 |
 |---|---|---|
+| `console_prep.sh` | **在各主機 console 直接執行**：裝 openssh-server、顯示 IP | （不經 SSH，僅新機用） |
 | `connect.sh` | 互動式 SSH 連線 | 可用，顯示警告 |
 | `run.sh` | 批次執行指令（無預設指令） | 可用，逐台警告＋確認 |
 | `push.sh` | rsync 推送檔案 | **拒絕** |
