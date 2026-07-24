@@ -2,9 +2,7 @@
    path = {{SHARE_PATH}}
    browsable = yes
    writable = yes
-   guest ok = no
+   guest ok = yes
+   guest only = yes
    read only = no
-   valid users = {{SMB_USER}}
    force user = {{SMB_USER}}
-   create mask = 0664
-   directory mask = 0775

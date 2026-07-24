@@ -89,14 +89,18 @@ cd jinyu_quanxing/deploy-tool
 | `setup_mongo.sh` | MongoDB 原生安裝（apt mongodb-org，非 docker） | **拒絕** |
 | `deploy_app.sh` | 推配置＋docker compose up | **拒絕** |
 
-設計細節：
+設計細節（作法整合自 `Dropbox/FEMC/Linux Command/` 的實戰筆記）：
 - 改遠端設定檔（smb.conf、fstab、keepalived、haproxy、~/.ssh/config）前都會先備份 `.bak.<時間戳>`，
   且用 managed block（`# BEGIN/END jinyu-quanxing deploy-tool`）只動自己的區塊，重跑冪等
-- keepalived 的網卡名稱不寫死（evergreen 是 eno1），部署時於遠端自動偵測 default route 介面
-- NAS 掛載帳密存遠端 `/etc/samba/jy-nas-credentials`（root 600），fstab 不放明文密碼
-  （此處與 evergreen 筆記的 fstab 明文寫法不同，較安全）
-- Samba share 設為認證後可寫（evergreen 筆記中的 smb.conf 是 guest 唯讀，但其 fstab
-  以帳密掛載且 reader 需寫入資料，兩者矛盾；本工具採用與 fstab 一致的可寫設定）
+- keepalived 的網卡名稱不寫死（evergreen 是 eno1），部署時於遠端自動偵測 default route 介面；
+  兩台的 auth_pass 由 site.env 統一渲染（避免筆記中兩台不一致的問題）
+- haproxy 預設用發行版內建版本；要照筆記裝 PPA 2.7 → site.env 設 `HAPROXY_PPA_VERSION="2.7"`
+- Samba 照筆記的 guest + force user 可寫模式（server 端不需 smbpasswd），
+  並建立 samba-autostart systemd 服務確保開機啟動
+- client 掛載照筆記用帳密（guest 掛載選項已不可靠），帳密存遠端
+  `/etc/samba/jy-nas-credentials`（root 600），fstab 不放明文密碼
+- MongoDB 原生安裝（非 docker）：預設 5.0（同筆記），含 Ubuntu 22.04+ 的 libssl1.1
+  workaround；bindIp 自動設「127.0.0.1,主機內網IP」；ufw 啟用時只放行 EMS 機 27017
 - `site.env` 的 `NAS_SMB_PASSWORD` 若填入真實密碼，**commit 前務必清空**
 
 ## 程式配置骨架（現場設備清單確定後）

@@ -1,7 +1,9 @@
 #!/bin/bash
-# NAS/Samba 建置：
-#   1) nas 機：安裝 samba、建立 [storage] share、設定 smbpasswd
-#   2) 其他 target 機：fstab 加 cifs 掛載（managed block）、mount -a 驗證
+# NAS/Samba 建置（照過往實戰筆記 Linux Command/samba.txt 的模式）：
+#   1) nas 機：安裝 samba、建立 [storage] share（guest + force user，可寫）、
+#      建 samba-autostart systemd 服務確保開機啟動
+#   2) 其他 target 機：fstab 加 cifs 掛載（managed block、credentials 檔）、mount -a 驗證
+#      （筆記註明 guest 掛載選項已不可靠，因此 client 端仍以帳密掛載）
 # 使用方式: ./setup_nas.sh [--dry-run] [server|clients|all]（預設 all）
 set -e
 source "$(cd "$(dirname "$0")" && pwd)/lib/common.sh"
@@ -23,9 +25,11 @@ fi
 # 內網 IP：其他機器用它掛載 NAS
 NAS_IP=$(host_field "$NAS_HOST" 6)
 
-# Samba 密碼：site.env 沒填則互動詢問
-if [ -z "$NAS_SMB_PASSWORD" ] && [ "$DRY_RUN" != "true" ]; then
-    read -r -s -p "請輸入 Samba 使用者 ${NAS_SMB_USER} 的密碼（用於 smbpasswd 與 fstab）: " NAS_SMB_PASSWORD
+# 掛載用密碼：site.env 沒填則互動詢問
+# （share 為 guest + force user 模式，server 端不需 smbpasswd；
+#   此密碼只寫入各 client 的 credentials 檔供 cifs 掛載使用，照既有做法填該使用者的密碼）
+if [ -z "$NAS_SMB_PASSWORD" ] && [ "$DRY_RUN" != "true" ] && { [ "$MODE" = "clients" ] || [ "$MODE" = "all" ]; }; then
+    read -r -s -p "請輸入 client 掛載用密碼（使用者 ${NAS_SMB_USER}）: " NAS_SMB_PASSWORD
     echo ""
     [ -z "$NAS_SMB_PASSWORD" ] && { log_error "密碼不可為空"; exit 1; }
 fi
@@ -48,7 +52,7 @@ if [ "$MODE" = "server" ] || [ "$MODE" = "all" ]; then
     cat > "$RS_SERVER" << 'REMOTE_EOF'
 #!/bin/bash
 set -e
-SHARE_PATH="$1"; SMB_USER="$2"; SMB_PASSWORD="$3"
+SHARE_PATH="$1"; SMB_USER="$2"
 SNIPPET="/tmp/jy_smb_snippet.conf"
 BEGIN_MARK="# BEGIN jinyu-quanxing deploy-tool"
 END_MARK="# END jinyu-quanxing deploy-tool"
@@ -76,18 +80,34 @@ sudo mv /etc/samba/smb.conf.new /etc/samba/smb.conf
 rm -f "$SNIPPET"
 
 testparm -s >/dev/null || { echo "✗ smb.conf 語法檢查失敗"; exit 1; }
-
-# 設定 samba 使用者密碼
-printf '%s\n%s\n' "$SMB_PASSWORD" "$SMB_PASSWORD" | sudo smbpasswd -a -s "$SMB_USER"
+# share 為 guest + force user 模式，不需 smbpasswd
 
 sudo systemctl enable --now smbd
 sudo systemctl restart smbd
+
+# samba 開機自動啟動保險服務（照 Linux Command/samba.txt 的做法）
+sudo tee /etc/systemd/system/samba-autostart.service >/dev/null << 'UNIT_EOF'
+[Unit]
+Description=Start Samba service at boot time
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/bin/systemctl start smbd.service
+ExecStartPost=/bin/systemctl status smbd.service
+
+[Install]
+WantedBy=multi-user.target
+UNIT_EOF
+sudo systemctl daemon-reload
+sudo systemctl enable samba-autostart.service
+systemctl is-active smbd
 echo "===== [remote] NAS 設定完成 ✓ ====="
 REMOTE_EOF
 
     log_step "上傳 share 設定片段到 $NAS_HOST ..."
     do_scp "$NAS_HOST" "$SMB_SNIPPET" "/tmp/jy_smb_snippet.conf"
-    run_remote_script "$NAS_HOST" "$RS_SERVER" "'$NAS_SHARE_PATH' '$NAS_SMB_USER' '$NAS_SMB_PASSWORD'"
+    run_remote_script "$NAS_HOST" "$RS_SERVER" "'$NAS_SHARE_PATH' '$NAS_SMB_USER'"
     log_info "✓ NAS server 設定完成"
 fi
 

@@ -57,7 +57,7 @@ trap 'rm -f "$RS"' EXIT
 cat > "$RS" << 'REMOTE_EOF'
 #!/bin/bash
 set -e
-VIP="$1"
+VIP="$1"; HAPROXY_PPA="$2"
 echo "===== [remote] HA 設定: $(hostname) ====="
 
 # 自動偵測 default route 的網卡
@@ -66,7 +66,14 @@ IFACE=$(ip route | awk '/^default/ {print $5; exit}')
 echo "使用網卡: $IFACE"
 
 sudo apt-get update
+# 指定 haproxy 版本時走 PPA（照 Linux Command 筆記，如 2.7 → ppa:vbernat/haproxy-2.7）
+if [ -n "$HAPROXY_PPA" ]; then
+    sudo apt-get install -y software-properties-common
+    sudo add-apt-repository -y "ppa:vbernat/haproxy-${HAPROXY_PPA}"
+    sudo apt-get update
+fi
 sudo apt-get install -y keepalived haproxy
+haproxy -v | head -1
 
 sed -i "s/__JY_INTERFACE__/$IFACE/" /tmp/jy_keepalived.conf
 
@@ -82,7 +89,7 @@ sudo mv /tmp/jy_haproxy_check.sh /usr/local/sbin/haproxy_check.sh
 sudo chmod +x /usr/local/sbin/haproxy_check.sh
 
 # 驗證 haproxy 設定
-sudo haproxy -c -f /etc/haproxy/haproxy.cfg
+sudo haproxy -f /etc/haproxy/haproxy.cfg -c -V
 
 sudo systemctl enable haproxy keepalived
 sudo systemctl restart haproxy
@@ -107,7 +114,7 @@ deploy_ha_to() {  # deploy_ha_to <name> <序號 1|2>
     do_scp "$name" "$cfgdir/keepalived.conf"   "/tmp/jy_keepalived.conf"
     do_scp "$name" "$cfgdir/haproxy.cfg"       "/tmp/jy_haproxy.cfg"
     do_scp "$name" "$cfgdir/haproxy_check.sh"  "/tmp/jy_haproxy_check.sh"
-    run_remote_script "$name" "$RS" "'$VIP'"
+    run_remote_script "$name" "$RS" "'$VIP' '${HAPROXY_PPA_VERSION:-}'"
     log_info "✓ $name 完成"
 }
 

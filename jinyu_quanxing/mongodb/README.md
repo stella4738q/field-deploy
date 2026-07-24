@@ -18,6 +18,8 @@ vim site.env                            # 設定 MONGO_VERSION / MONGO_BIND_IP
 - 服務：`systemctl status mongod`
 
 注意：
-- bindIp 預設開 `0.0.0.0` 供內網 EMS 機連線；未啟用認證時僅適用封閉內網，
-  需要帳號認證請現場另行設定（security.authorization）
-- 資料初始化/還原不在部署工具範圍，現場依需求處理
+- bindIp 預設自動設為「127.0.0.1,主機內網IP」（照 `Linux Command/Mongodb.txt` 做法，不開 0.0.0.0）
+- ufw 已啟用時，腳本會只放行 EMS 機內網 IP 連 27017
+- 帳號認證（security.authorization + createUser）為現場手動步驟，
+  指令參考 `Dropbox/FEMC/Linux Command/Mongodb.txt`
+- 資料初始化/還原不在部署工具範圍；mongodump / mongorestore 範例同樣在該筆記
