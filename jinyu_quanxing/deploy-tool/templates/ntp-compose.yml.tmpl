@@ -1,0 +1,14 @@
+# NTP container（chrony）
+# - cap SYS_TIME + host network：直接校正主機時鐘（kernel 時鐘共用）
+# - 同時對場內 LAN 提供 NTP 服務（UDP 123），場內設備可指向本機 IP
+services:
+  ntp:
+    image: cturra/ntp:latest
+    container_name: ntp
+    restart: always
+    network_mode: host
+    cap_add:
+      - SYS_TIME
+    environment:
+      - NTP_SERVERS={{NTP_SERVERS}}
+      - TZ={{TZ}}

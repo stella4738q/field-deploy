@@ -33,6 +33,7 @@ jinyu_quanxing/
 ├── ems-server-1/config_file/   # EMS1 的 keepalived(MASTER)/haproxy 設定（setup_ha.sh 產生）
 ├── ems-server-2/config_file/   # EMS2 的 keepalived(BACKUP)/haproxy 設定
 ├── nas/config_file/            # Samba [storage] share 設定
+├── ntp/                        # NTP container compose（setup_ntp.sh 產生，四台共用）
 └── mongodb/                    # MongoDB 原生安裝說明（非 docker，照 evergreen .105 模式）
 ```
 
@@ -71,16 +72,19 @@ cd jinyu_quanxing/deploy-tool
 # 3. 基礎環境（docker、compose、git、cifs-utils、時區）
 ./bootstrap.sh all
 
-# 4. NAS：samba server + 各機 cifs 掛載
+# 4. NTP container（四台都裝；校正主機時鐘 + 對場內設備提供 NTP）
+./setup_ntp.sh
+
+# 5. NAS：samba server + 各機 cifs 掛載
 ./setup_nas.sh
 
-# 5. EMS 雙機 HA（keepalived VIP + haproxy）
+# 6. EMS 雙機 HA（keepalived VIP + haproxy）
 ./setup_ha.sh
 
-# 6. MongoDB 原生安裝（非 docker；版本先參考 eg-mongo，見 mongodb/README.md）
+# 7. MongoDB 原生安裝（非 docker；版本先參考 eg-mongo，見 mongodb/README.md）
 ./setup_mongo.sh
 
-# 7. 程式部署（對含 docker-compose.yml 的目錄通用）
+# 8. 程式部署（對含 docker-compose.yml 的目錄通用）
 ./deploy_app.sh jy-ems1 ../ems-server-1/batch_process   # 配置備妥後
 ```
 
@@ -102,6 +106,7 @@ cd jinyu_quanxing/deploy-tool
 | `setup_ssh.sh` | 金鑰佈建＋config alias | ssh-copy-id **拒絕**（alias 仍會寫，僅供連線） |
 | `bootstrap.sh` | docker/compose/時區/常用套件 | **拒絕** |
 | `setup_nas.sh` | samba server＋cifs fstab 掛載 | **拒絕** |
+| `setup_ntp.sh` | NTP container 部署（chrony，四台都裝） | **拒絕** |
 | `setup_ha.sh` | keepalived＋haproxy 雙機 HA | **拒絕** |
 | `setup_mongo.sh` | MongoDB 原生安裝（apt mongodb-org，非 docker） | **拒絕** |
 | `deploy_app.sh` | 推配置＋docker compose up | **拒絕** |
