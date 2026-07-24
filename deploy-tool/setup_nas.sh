@@ -13,12 +13,12 @@ set -- "${ARGS[@]}"
 
 MODE="${1:-all}"   # server / clients / all
 
-NAS_HOST=$(list_writable_hosts nas | head -1)
+NAS_HOST=$(list_writable_hosts data-collection | head -1)
 CLIENT_HOSTS=$(list_writable_hosts | grep -v "^${NAS_HOST}$" || true)
 
 if [ -z "$NAS_HOST" ]; then
-    log_error "hosts.conf 中沒有可建置的 nas 主機（readonly 不納入）"
-    log_error "請先啟用新案場 jy-nas"
+    log_error "hosts.conf 中沒有可建置的 data-collection 主機（readonly 不納入）"
+    log_error "請先到 hosts.conf 啟用 data-collection 角色主機"
     exit 1
 fi
 

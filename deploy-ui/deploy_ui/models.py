@@ -14,7 +14,7 @@ class Host:
     ssh_host: str
     port: int
     user: str
-    role: str  # ems / nas / mongo
+    role: str  # ems / data-collection（兼 Samba storage）/ database-server
     internal_ip: str
     readonly: bool
 

@@ -16,7 +16,7 @@ HOSTS_SAMPLE = """\
 #jy-x   1.2.3.4  22  u  ems  1.2.3.4  no
 
 jy-ems1   192.168.100.101  22    myuser  ems    192.168.100.101  no
-jy-nas    203.0.113.9      5003  myuser  nas    192.168.100.103  yes
+qx-data-collection  203.0.113.9  5003  myuser  data-collection  192.168.100.103  yes
 """
 
 ENV_SAMPLE = """\
@@ -32,10 +32,10 @@ def test_parse_hosts_conf(tmp_path: Path):
     p = tmp_path / "hosts.conf"
     p.write_text(HOSTS_SAMPLE, encoding="utf-8")
     hosts = parse_hosts_conf(p)
-    assert [h.name for h in hosts] == ["jy-ems1", "jy-nas"]
+    assert [h.name for h in hosts] == ["jy-ems1", "qx-data-collection"]
     assert hosts[0].port == 22 and not hosts[0].readonly
     assert hosts[1].port == 5003 and hosts[1].readonly
-    assert hosts[1].role == "nas"
+    assert hosts[1].role == "data-collection"
 
 
 def test_parse_site_env(tmp_path: Path):

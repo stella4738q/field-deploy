@@ -28,7 +28,7 @@ fi
 
 if [ -z "${TARGETS// /}" ]; then
     log_warn "hosts.conf 中沒有可佈建的 target 主機（非 readonly）"
-    log_warn "新案場主機資訊確認後，請先到 hosts.conf 取消註解 jy-* 並填入實際值"
+    log_warn "新案場主機資訊確認後，請先到 hosts.conf 啟用新案場主機並填入實際值"
     log_info "仍會更新 ~/.ssh/config 的連線 alias（含現役機器，僅供連線查看）"
 fi
 

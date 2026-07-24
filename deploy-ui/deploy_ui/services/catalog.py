@@ -90,13 +90,13 @@ class Catalog:
         ),
         SoftwareItem(
             "nas_server", "Samba server",
-            "NAS 機建立 [storage] share（guest + force user）+ 開機自啟",
-            roles=("nas",),
+            "data-collection 機建立 [storage] share（guest + force user）+ 開機自啟",
+            roles=("data-collection",),
         ),
         SoftwareItem(
             "nas_client", "NAS 掛載",
             "cifs 掛載 NAS share 到 /mnt/…（fstab managed block + credentials 檔）",
-            roles=("ems", "mongo"),
+            roles=("ems", "database-server"),
             required_params=("NAS_SMB_PASSWORD",),
         ),
         SoftwareItem(
@@ -107,7 +107,7 @@ class Catalog:
         SoftwareItem(
             "mongo", "MongoDB（原生）",
             "apt mongodb-org 原生安裝（非 docker）、bindIp 限內網、ufw 放行 EMS",
-            roles=("mongo",),
+            roles=("database-server",),
         ),
     )
 
@@ -188,9 +188,9 @@ class Catalog:
         ]
 
     def _plan_nas_client(self, site: Site, env: dict, hosts: list[Host]) -> list[HostPlan]:
-        nas_hosts = site.writable_hosts("nas")
+        nas_hosts = site.writable_hosts("data-collection")
         if not nas_hosts:
-            raise ValueError("找不到 nas 角色主機，無法產生掛載設定")
+            raise ValueError("找不到 data-collection 角色主機，無法產生掛載設定")
         nas_ip = nas_hosts[0].internal_ip
         password = env.get("NAS_SMB_PASSWORD", "")
         if not password:

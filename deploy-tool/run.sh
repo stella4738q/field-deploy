@@ -19,7 +19,7 @@ if [ $# -lt 2 ]; then
     echo "範例:"
     echo "  $0 all \"uname -a\""
     echo "  $0 ems \"docker ps\""
-    echo "  $0 jy-nas \"df -h\""
+    echo "  $0 qx-data-collection \"df -h\""
     exit 1
 fi
 

@@ -12,7 +12,7 @@ parse_dry_run "$@"
 EMS_HOSTS=($(list_writable_hosts ems))
 if [ "${#EMS_HOSTS[@]}" -lt 2 ]; then
     log_error "需要 2 台非 readonly 的 ems 主機，目前只有 ${#EMS_HOSTS[@]} 台"
-    log_error "請先到 hosts.conf 啟用新案場 jy-ems1 / jy-ems2"
+    log_error "請先到 hosts.conf 啟用兩台 ems 角色主機"
     exit 1
 fi
 

@@ -17,12 +17,12 @@ if [ $# -ge 1 ]; then
     MONGO_HOST="$1"
     assert_writable "$MONGO_HOST"
 else
-    MONGO_HOST=$(list_writable_hosts mongo | head -1)
+    MONGO_HOST=$(list_writable_hosts database-server | head -1)
 fi
 
 if [ -z "$MONGO_HOST" ]; then
-    log_error "hosts.conf 中沒有可建置的 mongo 主機（readonly 不納入）"
-    log_error "請先啟用新案場 jy-mongo"
+    log_error "hosts.conf 中沒有可建置的 database-server 主機（readonly 不納入）"
+    log_error "請先到 hosts.conf 啟用 database-server 角色主機"
     exit 1
 fi
 

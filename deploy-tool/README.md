@@ -33,7 +33,7 @@ field-deploy/
 
 ```bash
 cp -r sites/jinyu-quanxing sites/<新案場名>     # 以現有案場為模板
-vim sites/<新案場名>/hosts.conf                 # 填主機（jy- 前綴改成新案場代號）
+vim sites/<新案場名>/hosts.conf                 # 填主機（qx- 前綴改成新案場代號）
 vim sites/<新案場名>/site.env                   # 調整 VIP、NAS、版本等參數
 ./run.sh --site <新案場名> --list               # 確認解析正確
 ```
@@ -65,7 +65,7 @@ cd deploy-tool
 ./run.sh all "uname -a"          # 2. 煙霧測試
 ./bootstrap.sh all               # 3. 基礎環境（docker、compose、時區、openssh 常駐）
 ./setup_ntp.sh                   # 4. NTP container（每台；校時 + 對場內設備供時）
-./setup_nas.sh                   # 5. NAS：samba server + 各機 cifs 掛載
+./setup_nas.sh                   # 5. data-collection 機 samba server + 各機 cifs 掛載
 ./setup_ha.sh                    # 6. EMS 雙機 HA（keepalived VIP + haproxy）
 ./setup_mongo.sh                 # 7. MongoDB 原生安裝（非 docker）
 ./deploy_app.sh <主機> <配置目錄>  # 8. 程式部署（含 docker-compose.yml 的目錄）

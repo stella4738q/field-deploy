@@ -8,6 +8,7 @@
 #   3. sites/ 底下只有一個案場時自動選用
 #
 # hosts.conf 欄位：name(1) ssh_host(2) port(3) user(4) role(5) internal_ip(6) readonly(7)
+# role：ems / data-collection（兼 Samba storage）/ database-server
 # readonly=yes 的主機只能看；所有寫入類函式一律拒絕。
 
 # ── 顏色輸出 ──────────────────────────────────────────────
@@ -153,9 +154,9 @@ warn_if_readonly() {
 }
 
 show_hosts_table() {
-    printf '%-10s %-18s %-6s %-8s %-7s %-17s %s\n' NAME SSH_HOST PORT USER ROLE INTERNAL_IP READONLY
-    printf '%-10s %-18s %-6s %-8s %-7s %-17s %s\n' ---- -------- ---- ---- ---- ----------- --------
-    _hosts_body | awk '{printf "%-10s %-18s %-6s %-8s %-7s %-17s %s\n", $1, $2, $3, $4, $5, $6, ($7=="yes" ? "yes ⚠現役唯讀" : "no")}'
+    printf '%-20s %-18s %-6s %-8s %-17s %-17s %s\n' NAME SSH_HOST PORT USER ROLE INTERNAL_IP READONLY
+    printf '%-20s %-18s %-6s %-8s %-17s %-17s %s\n' ---- -------- ---- ---- ---- ----------- --------
+    _hosts_body | awk '{printf "%-20s %-18s %-6s %-8s %-17s %-17s %s\n", $1, $2, $3, $4, $5, $6, ($7=="yes" ? "yes ⚠現役唯讀" : "no")}'
 }
 
 # ── SSH / scp / rsync 包裝 ────────────────────────────────

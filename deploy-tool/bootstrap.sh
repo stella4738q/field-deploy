@@ -27,7 +27,7 @@ fi
 
 if [ -z "${HOSTS// /}" ]; then
     log_error "沒有可建置的 target 主機（readonly 主機不會被納入）"
-    log_error "請先到 hosts.conf 啟用新案場 jy-* 主機"
+    log_error "請先到 hosts.conf 啟用新案場主機"
     exit 1
 fi
 

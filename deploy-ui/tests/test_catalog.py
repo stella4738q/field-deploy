@@ -19,8 +19,8 @@ def _mk_site() -> Site:
         hosts=[
             host("ems1", "ems", "192.168.100.101"),
             host("ems2", "ems", "192.168.100.102"),
-            host("nas", "nas", "192.168.100.103"),
-            host("mongo", "mongo", "192.168.100.105"),
+            host("nas", "data-collection", "192.168.100.103"),
+            host("mongo", "database-server", "192.168.100.105"),
             host("old", "ems", "10.0.0.9", readonly=True),
         ],
         env={
