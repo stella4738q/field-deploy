@@ -259,6 +259,7 @@ class SetupPage(QWidget):
                 self.catalog,
                 on_line=worker.emit_line,
                 on_step=lambda r: worker.emit_step(r.host, r.description, r.ok),
+                stop_check=lambda: worker.cancelled,
             )
             sessions: dict[str, SSHSession] = {}
             failed_hosts: set[str] = set()

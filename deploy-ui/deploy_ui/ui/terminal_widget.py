@@ -2,10 +2,15 @@
 
 from __future__ import annotations
 
+import re
+
 from PySide6.QtGui import QFont, QTextCursor
 from PySide6.QtWidgets import QPlainTextEdit
 
 MAX_LINES = 5000
+
+# pty 下部分程式仍會輸出 ANSI escape（顏色/游標控制），顯示前剝除
+_ANSI_RE = re.compile(r"\x1b\[[0-9;?]*[a-zA-Z]|\x1b\][^\x07]*\x07|\x1b[=>]")
 
 # 依主機名穩定配色（深色底上的亮色系）
 _HOST_COLORS = ["#8be9fd", "#50fa7b", "#ffb86c", "#ff79c6", "#bd93f9", "#f1fa8c"]
@@ -28,6 +33,7 @@ class TerminalWidget(QPlainTextEdit):
         return _HOST_COLORS[hash(host) % len(_HOST_COLORS)]
 
     def append_line(self, host: str, text: str) -> None:
+        text = _ANSI_RE.sub("", text)
         text = text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
         if host:
             color = self._host_color(host)

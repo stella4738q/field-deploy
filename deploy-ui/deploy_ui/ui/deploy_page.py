@@ -143,6 +143,7 @@ class DeployPage(QWidget):
                     cmd,
                     on_line=lambda t: worker.emit_line(host.name, t),
                     sudo_password=password,
+                    stop=lambda: worker.cancelled,
                 )
                 return result.ok
 

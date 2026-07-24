@@ -43,10 +43,12 @@ class PlanRunner:
         *,
         on_line: Callable[[str, str], None] | None = None,
         on_step: Callable[[StepResult], None] | None = None,
+        stop_check: Callable[[], bool] | None = None,
     ):
         self.catalog = catalog
         self.on_line = on_line or (lambda h, t: None)
         self.on_step = on_step or (lambda r: None)
+        self.stop_check = stop_check
 
     def run_plan(self, session: SSHSession, plan: HostPlan, sudo_password: str | None) -> bool:
         """逐步驟執行；任一步失敗即中止該主機並回傳 False。"""
@@ -86,6 +88,7 @@ class PlanRunner:
             cmd,
             on_line=lambda text: self.on_line(session.host.name, text),
             sudo_password=sudo_password,
+            stop=self.stop_check,
         )
         return result.ok
 
