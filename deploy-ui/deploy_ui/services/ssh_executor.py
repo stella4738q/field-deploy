@@ -160,8 +160,11 @@ class SSHSession:
         """
         use_pty = sudo_password is not None
         if use_pty:
+            # TERM=dumb 抑制一般程式的 ANSI；docker compose 另走自己的 TTY 偵測，
+            # 需 COMPOSE_ANSI/PROGRESS 明確關閉（實測 compose 在 pty 下會噴動畫控制碼）
             command = (
-                "export TERM=dumb DEBIAN_FRONTEND=noninteractive; "
+                "export TERM=dumb DEBIAN_FRONTEND=noninteractive "
+                "COMPOSE_ANSI=never COMPOSE_PROGRESS=plain BUILDKIT_PROGRESS=plain; "
                 f"sudo -S -p '{SUDO_PROMPT}' -v && {command}"
             )
 
@@ -178,7 +181,8 @@ class SSHSession:
         sent_password = False
 
         def emit(raw: bytes):
-            # pty 進度列以 \r 原地更新：只取最後一段（最終狀態）
+            # 先去行尾 \r（pty 的 \r\n），再處理進度列的原地更新（只取最後一段）
+            raw = raw.rstrip(b"\r")
             if b"\r" in raw:
                 raw = raw.split(b"\r")[-1]
             line = raw.decode("utf-8", errors="replace")
