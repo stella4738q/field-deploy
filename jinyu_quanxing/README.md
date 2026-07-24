@@ -99,8 +99,8 @@ cd jinyu_quanxing/deploy-tool
   並建立 samba-autostart systemd 服務確保開機啟動
 - client 掛載照筆記用帳密（guest 掛載選項已不可靠），帳密存遠端
   `/etc/samba/jy-nas-credentials`（root 600），fstab 不放明文密碼
-- MongoDB 原生安裝（非 docker）：預設 5.0（同筆記），含 Ubuntu 22.04+ 的 libssl1.1
-  workaround；bindIp 自動設「127.0.0.1,主機內網IP」；ufw 啟用時只放行 EMS 機 27017
+- MongoDB 原生安裝（非 docker）：預設最新穩定版 8.0（site.env 可改；保留舊版所需的
+  libssl1.1 workaround）；bindIp 自動設「127.0.0.1,主機內網IP」；ufw 啟用時只放行 EMS 機 27017
 - `site.env` 的 `NAS_SMB_PASSWORD` 若填入真實密碼，**commit 前務必清空**
 
 ## 程式配置骨架（現場設備清單確定後）

@@ -1,7 +1,8 @@
 #!/bin/bash
 # MongoDB 原生安裝（照 evergreen .105 模式：mongod 直接裝在主機上，非 docker）
 # 作法整合自過往實戰筆記（Dropbox/FEMC/Linux Command/Mongodb.txt）：
-#   - mongodb-org apt repo 安裝，含 Ubuntu 22.04+ 裝 5.0 的 libssl1.1 workaround
+#   - mongodb-org apt repo 安裝，預設最新穩定版（site.env 的 MONGO_VERSION）
+#   - 保留 libssl1.1 workaround（僅裝 5.0 等舊版失敗時才會用到）
 #   - bindIp 預設「127.0.0.1,主機內網IP」（不開 0.0.0.0）
 #   - ufw 啟用時只放行 EMS 機內網 IP 連 27017
 # 使用方式: ./setup_mongo.sh [--dry-run] [name]
@@ -25,7 +26,7 @@ if [ -z "$MONGO_HOST" ]; then
     exit 1
 fi
 
-MONGO_VERSION="${MONGO_VERSION:-5.0}"
+MONGO_VERSION="${MONGO_VERSION:-8.0}"
 
 # bindIp 未指定則自動用「127.0.0.1,mongo 主機內網 IP」
 if [ -z "${MONGO_BIND_IP}" ]; then
