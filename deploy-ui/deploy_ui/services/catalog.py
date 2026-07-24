@@ -23,10 +23,19 @@ class UploadStep:
 
 @dataclass(frozen=True)
 class PayloadStep:
-    """上傳 payloads/<payload> 到遠端並以 bash 執行（需要 sudo 權限）。"""
+    """上傳 payloads/<payload> 到遠端並以 bash 執行（需要 sudo 權限）。
+
+    mask：args 中屬於機密（密碼等）的索引，顯示時以 *** 取代。
+    """
 
     payload: str
     args: tuple[str, ...] = ()
+    mask: tuple[int, ...] = ()
+
+    def display_args(self) -> str:
+        return " ".join(
+            "***" if i in self.mask else a for i, a in enumerate(self.args)
+        )
 
 
 Step = UploadStep | PayloadStep
@@ -194,7 +203,7 @@ class Catalog:
             password,
         )
         return [
-            HostPlan(h, (PayloadStep("remote_nas_client.sh", args),))
+            HostPlan(h, (PayloadStep("remote_nas_client.sh", args, mask=(4,)),))
             for h in hosts
         ]
 
@@ -222,6 +231,7 @@ class Catalog:
                     "ROUTER_ID": f"keepalived_node{idx}",
                     "STATE": state,
                     "INTERFACE": "__JY_INTERFACE__",  # 遠端 payload 偵測後代入
+                    "VRID": env.get("KEEPALIVED_VRID", "101"),
                     "PRIORITY": prio,
                     "AUTH_PASS": env.get("KEEPALIVED_AUTH_PASS", "10149683"),
                     "VIP": vip,

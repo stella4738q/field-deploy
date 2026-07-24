@@ -88,6 +88,16 @@ def test_nas_client_needs_password(catalog):
     step = plans[0].steps[0]
     assert step.args[0] == "192.168.100.103"  # nas 內網 IP
     assert step.args[-1] == "pw"
+    # 密碼在顯示層必須被遮罩（實測曾洩漏到 terminal）
+    assert "pw" not in step.display_args()
+    assert "***" in step.display_args()
+
+
+def test_ha_vrid_from_env(catalog):
+    site = _mk_site()
+    site.env["KEEPALIVED_VRID"] = "77"
+    plans = catalog.build_plans(site, "ha", [site.host("ems1"), site.host("ems2")], {})
+    assert "virtual_router_id 77" in plans[0].steps[0].content
 
 
 def test_mongo_bind_ip_auto(catalog):

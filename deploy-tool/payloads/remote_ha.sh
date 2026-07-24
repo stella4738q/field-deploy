@@ -37,7 +37,7 @@ sudo haproxy -f /etc/haproxy/haproxy.cfg -c -V
 sudo systemctl enable haproxy keepalived
 sudo systemctl restart haproxy
 sudo systemctl restart keepalived
-sleep 2
+sleep 4
 echo "--- 服務狀態 ---"
 systemctl is-active haproxy keepalived
 echo "--- VIP 檢查 ---"

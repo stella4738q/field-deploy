@@ -203,7 +203,7 @@ class SetupPage(QWidget):
                         self.terminal.append_line(plan.host.name, f"  上傳 → {step.remote_path}")
                     elif isinstance(step, PayloadStep):
                         self.terminal.append_line(
-                            plan.host.name, f"  執行 payloads/{step.payload} {' '.join(step.args)}"
+                            plan.host.name, f"  執行 payloads/{step.payload} {step.display_args()}"
                         )
 
     # ── 執行 ────────────────────────────────────────────

@@ -37,6 +37,7 @@ render_one() {  # render_one <序號 1|2> <STATE> <PRIORITY>
         "ROUTER_ID=keepalived_node${idx}" \
         "STATE=${state}" \
         "INTERFACE=__JY_INTERFACE__" \
+        "VRID=${KEEPALIVED_VRID:-101}" \
         "PRIORITY=${prio}" \
         "AUTH_PASS=${KEEPALIVED_AUTH_PASS}" \
         "VIP=${VIP}"

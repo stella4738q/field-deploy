@@ -13,7 +13,7 @@ vrrp_script chk_haproxy {
 vrrp_instance VI_1 {
     state {{STATE}}
     interface {{INTERFACE}}
-    virtual_router_id 101
+    virtual_router_id {{VRID}}
     priority {{PRIORITY}}
     advert_int 1
     authentication {

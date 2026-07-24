@@ -65,7 +65,7 @@ class PlanRunner:
                     return False
             elif isinstance(step, PayloadStep):
                 desc = f"執行 {step.payload}"
-                self.on_line(host.name, f"→ {desc} {' '.join(step.args)}")
+                self.on_line(host.name, f"→ {desc} {step.display_args()}")
                 try:
                     ok = self._run_payload(session, step, sudo_password)
                 except Exception as e:  # noqa: BLE001
