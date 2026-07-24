@@ -46,42 +46,12 @@ do_ssh "$NAME" "mkdir -p ~/deploy"
 do_rsync "$NAME" "${SRC_DIR%/}/" "${REMOTE_DIR}/"
 
 # ── 遠端啟動 ──
-RS=$(mktemp "${TMPDIR:-/tmp}/jy_deploy_app.XXXXXX")
-trap 'rm -f "$RS"' EXIT
-cat > "$RS" << 'REMOTE_EOF'
-#!/bin/bash
-set -e
-TARGET_DIR="$1"
-echo "===== [remote] 部署: $(hostname) → $TARGET_DIR ====="
-
-if [ -n "$DOCKER_USERNAME" ] && [ -n "$DOCKER_PASSWORD" ]; then
-    echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-fi
-
-FAIL=0
-for compose in $(find "$TARGET_DIR" -name docker-compose.yml | sort); do
-    d=$(dirname "$compose")
-    echo ""
-    echo "--- docker compose up: $d ---"
-    if (cd "$d" && docker compose up -d); then
-        echo "✓ $d 啟動成功"
-    else
-        echo "✗ $d 啟動失敗"
-        FAIL=1
-    fi
-done
-
-echo ""
-echo "--- 容器狀態 ---"
-docker ps --format 'table {{.Names}}\t{{.Status}}\t{{.Image}}'
-exit $FAIL
-REMOTE_EOF
 
 REMOTE_TARGET="deploy/${BASE}"
 if [ "$DRY_RUN" = "true" ]; then
     echo "[DRY-RUN] 遠端將對 $REMOTE_TARGET 下所有 docker-compose.yml 執行 docker compose up -d"
 else
-    run_remote_script "$NAME" "$RS" "$REMOTE_TARGET"
+    run_remote_script "$NAME" "$PAYLOAD_DIR/remote_deploy_app.sh" "$REMOTE_TARGET"
 fi
 
 echo ""

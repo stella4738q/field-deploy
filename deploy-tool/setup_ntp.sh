@@ -31,9 +31,8 @@ fi
 NTP_SERVERS="${NTP_SERVERS:-tock.stdtime.gov.tw,watch.stdtime.gov.tw,time.google.com}"
 
 # 渲染 compose 到 ../ntp/（repo 內留紀錄）
-REPO_ROOT="$(cd "$TOOL_DIR/.." && pwd)"
-mkdir -p "$REPO_ROOT/ntp"
-render_template "$TEMPLATE_DIR/ntp-compose.yml.tmpl" "$REPO_ROOT/ntp/docker-compose.yml" \
+mkdir -p "$SITE_DIR/ntp"
+render_template "$TEMPLATE_DIR/ntp-compose.yml.tmpl" "$SITE_DIR/ntp/docker-compose.yml" \
     "NTP_SERVERS=${NTP_SERVERS}" \
     "TZ=${SITE_TIMEZONE}"
 
@@ -45,34 +44,12 @@ done
 log_warn "會關閉各機的 systemd-timesyncd（改由 chrony container 校時）"
 confirm "確認部署？"
 
-RS=$(mktemp "${TMPDIR:-/tmp}/jy_ntp.XXXXXX")
-trap 'rm -f "$RS"' EXIT
-cat > "$RS" << 'REMOTE_EOF'
-#!/bin/bash
-set -e
-echo "===== [remote] NTP container 部署: $(hostname) ====="
-command -v docker >/dev/null 2>&1 || { echo "✗ 尚未安裝 docker，請先執行 bootstrap.sh"; exit 1; }
-
-# 關閉 systemd-timesyncd，避免與 chrony container 互搶時鐘
-sudo timedatectl set-ntp false 2>/dev/null || true
-
-cd ~/deploy/ntp
-docker compose up -d || sudo docker compose up -d
-sleep 3
-
-docker ps --filter name=ntp --format 'table {{.Names}}\t{{.Status}}\t{{.Image}}'
-echo "--- chrony 同步狀態 ---"
-docker exec ntp chronyc tracking 2>/dev/null | head -6 \
-    || echo "（container 剛啟動，稍後可用: docker exec ntp chronyc tracking 查看）"
-echo "===== [remote] $(hostname) NTP 部署完成 ✓ ====="
-REMOTE_EOF
-
 for h in $HOSTS; do
     echo ""
     log_step "──────── NTP 部署 $h ────────"
     do_ssh "$h" "mkdir -p ~/deploy/ntp"
-    do_rsync "$h" "$REPO_ROOT/ntp/" "~/deploy/ntp/"
-    run_remote_script "$h" "$RS"
+    do_rsync "$h" "$SITE_DIR/ntp/" "~/deploy/ntp/"
+    run_remote_script "$h" "$PAYLOAD_DIR/remote_ntp.sh"
     log_info "✓ $h 完成"
 done
 

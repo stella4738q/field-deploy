@@ -1,0 +1,74 @@
+#!/bin/bash
+# NAS/Samba 建置（照過往實戰筆記 Linux Command/samba.txt 的模式）：
+#   1) nas 機：安裝 samba、建立 [storage] share（guest + force user，可寫）、
+#      建 samba-autostart systemd 服務確保開機啟動
+#   2) 其他 target 機：fstab 加 cifs 掛載（managed block、credentials 檔）、mount -a 驗證
+#      （筆記註明 guest 掛載選項已不可靠，因此 client 端仍以帳密掛載）
+# 使用方式: ./setup_nas.sh [--dry-run] [server|clients|all]（預設 all）
+set -e
+source "$(cd "$(dirname "$0")" && pwd)/lib/common.sh"
+
+parse_dry_run "$@"
+set -- "${ARGS[@]}"
+
+MODE="${1:-all}"   # server / clients / all
+
+NAS_HOST=$(list_writable_hosts nas | head -1)
+CLIENT_HOSTS=$(list_writable_hosts | grep -v "^${NAS_HOST}$" || true)
+
+if [ -z "$NAS_HOST" ]; then
+    log_error "hosts.conf 中沒有可建置的 nas 主機（readonly 不納入）"
+    log_error "請先啟用新案場 jy-nas"
+    exit 1
+fi
+
+# 內網 IP：其他機器用它掛載 NAS
+NAS_IP=$(host_field "$NAS_HOST" 6)
+
+# 掛載用密碼：site.env 沒填則互動詢問
+# （share 為 guest + force user 模式，server 端不需 smbpasswd；
+#   此密碼只寫入各 client 的 credentials 檔供 cifs 掛載使用，照既有做法填該使用者的密碼）
+if [ -z "$NAS_SMB_PASSWORD" ] && [ "$DRY_RUN" != "true" ] && { [ "$MODE" = "clients" ] || [ "$MODE" = "all" ]; }; then
+    read -r -s -p "請輸入 client 掛載用密碼（使用者 ${NAS_SMB_USER}）: " NAS_SMB_PASSWORD
+    echo ""
+    [ -z "$NAS_SMB_PASSWORD" ] && { log_error "密碼不可為空"; exit 1; }
+fi
+
+# ══ 1) NAS server 端 ══════════════════════════════════════
+if [ "$MODE" = "server" ] || [ "$MODE" = "all" ]; then
+    echo ""
+    log_info "NAS server: ${NAS_HOST}（share [${NAS_SHARE_NAME}] → ${NAS_SHARE_PATH}）"
+    confirm "確認在 $NAS_HOST 安裝並設定 samba？"
+
+    SMB_SNIPPET=$(mktemp "${TMPDIR:-/tmp}/jy_smb.XXXXXX")
+
+    log_step "上傳 share 設定片段到 $NAS_HOST ..."
+    do_scp "$NAS_HOST" "$SMB_SNIPPET" "/tmp/jy_smb_snippet.conf"
+    run_remote_script "$NAS_HOST" "$PAYLOAD_DIR/remote_nas_server.sh" "'$NAS_SHARE_PATH' '$NAS_SMB_USER'"
+    log_info "✓ NAS server 設定完成"
+fi
+
+# ══ 2) client 端掛載 ══════════════════════════════════════
+if [ "$MODE" = "clients" ] || [ "$MODE" = "all" ]; then
+    if [ -z "${CLIENT_HOSTS// /}" ]; then
+        log_warn "沒有其他 target 主機需要掛載，跳過 client 設定"
+        exit 0
+    fi
+
+    echo ""
+    log_info "將在以下主機掛載 //${NAS_IP}/${NAS_SHARE_NAME} → ${NAS_MOUNT_POINT}:"
+    for h in $CLIENT_HOSTS; do
+        log_info "  - $h"
+    done
+    confirm "確認設定 fstab 並掛載？"
+
+    for h in $CLIENT_HOSTS; do
+        echo ""
+        log_step "──────── 掛載設定 $h ────────"
+        run_remote_script "$h" "$PAYLOAD_DIR/remote_nas_client.sh" "'$NAS_IP' '$NAS_SHARE_NAME' '$NAS_MOUNT_POINT' '$NAS_SMB_USER' '$NAS_SMB_PASSWORD'"
+        log_info "✓ $h 完成"
+    done
+fi
+
+echo ""
+log_info "✅ NAS/Samba 建置完成"

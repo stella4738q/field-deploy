@@ -1,9 +1,14 @@
 #!/bin/bash
-# jinyu-quanxing deploy-tool 共用函式庫
+# field-deploy 多案場部署工具共用函式庫
 # 各腳本以 source 載入：source "$(cd "$(dirname "$0")" && pwd)/lib/common.sh"
 #
+# 案場選擇（三擇一，優先序由高到低）：
+#   1. 腳本參數 --site <名稱>
+#   2. 環境變數 FD_SITE=<名稱>
+#   3. sites/ 底下只有一個案場時自動選用
+#
 # hosts.conf 欄位：name(1) ssh_host(2) port(3) user(4) role(5) internal_ip(6) readonly(7)
-# readonly=yes 的主機為現役機器，只能看；所有寫入類函式一律拒絕。
+# readonly=yes 的主機只能看；所有寫入類函式一律拒絕。
 
 # ── 顏色輸出 ──────────────────────────────────────────────
 RED='\033[0;31m'
@@ -17,17 +22,55 @@ log_step()  { echo -e "${BLUE}[STEP]${NC} $1"; }
 log_warn()  { echo -e "${YELLOW}[WARN]${NC} $1"; }
 log_error() { echo -e "${RED}[ERROR]${NC} $1"; }
 
-# ── 路徑與設定 ────────────────────────────────────────────
+# ── 路徑與案場解析 ────────────────────────────────────────
 TOOL_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-HOSTS_CONF="${TOOL_DIR}/hosts.conf"
-SITE_ENV="${TOOL_DIR}/site.env"
+REPO_ROOT="$(cd "$TOOL_DIR/.." && pwd)"
+SITES_DIR="${REPO_ROOT}/sites"
 TEMPLATE_DIR="${TOOL_DIR}/templates"
+PAYLOAD_DIR="${TOOL_DIR}/payloads"
 
+# 從呼叫端參數掃 --site（source 時可見呼叫腳本的 "$@"）
+SITE="${FD_SITE:-}"
+_prev=""
+for _a in "$@"; do
+    if [ "$_prev" = "--site" ]; then
+        SITE="$_a"
+    fi
+    _prev="$_a"
+done
+unset _a _prev
+
+# 未指定時：sites/ 只有一個案場就用它
+if [ -z "$SITE" ]; then
+    _count=0; _only=""
+    for _d in "$SITES_DIR"/*/; do
+        [ -d "$_d" ] || continue
+        _count=$((_count + 1)); _only="$(basename "$_d")"
+    done
+    if [ "$_count" -eq 1 ]; then
+        SITE="$_only"
+    else
+        log_error "有多個（或沒有）案場，請指定：--site <名稱> 或 export FD_SITE=<名稱>"
+        log_error "可用案場："
+        for _d in "$SITES_DIR"/*/; do [ -d "$_d" ] && log_error "  - $(basename "$_d")"; done
+        exit 1
+    fi
+    unset _count _only _d
+fi
+
+SITE_DIR="${SITES_DIR}/${SITE}"
+HOSTS_CONF="${SITE_DIR}/hosts.conf"
+SITE_ENV="${SITE_DIR}/site.env"
+
+if [ ! -d "$SITE_DIR" ]; then
+    log_error "找不到案場目錄: $SITE_DIR"
+    exit 1
+fi
 if [ ! -f "$HOSTS_CONF" ]; then
     log_error "找不到 hosts.conf: $HOSTS_CONF"
     exit 1
 fi
-# shellcheck source=../site.env
+# shellcheck disable=SC1090
 [ -f "$SITE_ENV" ] && source "$SITE_ENV"
 
 DRY_RUN="${DRY_RUN:-false}"
@@ -185,16 +228,22 @@ confirm() {  # confirm "<訊息>" → 必須輸入 yes 才繼續
 }
 
 # 各腳本開頭呼叫 parse_dry_run "$@" 後，以 "${ARGS[@]}" 取得其餘參數
+# （同時吃掉 --dry-run 與 --site <名稱>；--site 已於 source 時生效）
 parse_dry_run() {
     ARGS=()
-    local a
+    local a skip_next=false
     for a in "$@"; do
-        if [ "$a" = "--dry-run" ]; then
-            DRY_RUN=true
-        else
-            ARGS+=("$a")
+        if [ "$skip_next" = "true" ]; then
+            skip_next=false
+            continue
         fi
+        case "$a" in
+            --dry-run) DRY_RUN=true ;;
+            --site)    skip_next=true ;;
+            *)         ARGS+=("$a") ;;
+        esac
     done
+    log_info "案場: ${SITE}"
     if [ "$DRY_RUN" = "true" ]; then
         log_warn "── DRY-RUN 模式：只顯示將執行的動作，不實際執行 ──"
     fi
